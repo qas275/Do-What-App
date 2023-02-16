@@ -1,0 +1,48 @@
+<p>register works!</p>
+
+<table id="Banner">
+    <tr>LINKS</tr>
+    <tr>
+        <td>
+            <span [routerLink]="['/register']">Register</span>
+        </td>
+        <td>
+            <span [routerLink]="['/search']">search</span>
+        </td>
+        <td>
+            <span [routerLink]="['/results']">results</span>
+        </td>
+        <td>
+            <span [routerLink]="['/details']">details</span>
+        </td>
+        <td>
+            <span [routerLink]="['/comment']">comment</span>
+        </td>
+        <td>
+            <span [routerLink]="['/home']">home</span>
+        </td>
+        <td>
+            <span [routerLink]="['/login']">login</span>
+        </td>
+    </tr>
+</table>
+
+<form [formGroup]="registrationForm" (ngSubmit)="register()">
+    <table> 
+        <tr>
+            <td>Email:</td>
+            <td>
+                <input type="text" formControlName="email">
+            </td>
+        </tr>
+        <tr>
+            <td>PW:</td>
+            <td>
+                <input type="password" formControlName="password">
+            </td>
+        </tr>
+        <tr>
+            <td><button type="submit" [disabled]="registrationForm.invalid">Register!</button></td>
+        </tr>
+    </table>
+</form>

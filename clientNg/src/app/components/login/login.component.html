@@ -1,0 +1,51 @@
+<p>login works!</p>
+<p>a1@email.com</p>
+<p>pw1</p>
+<table id="Banner">
+    <tr>LINKS</tr>
+    <tr>
+        <td>
+            <span [routerLink]="['/register']">Register</span>
+        </td>
+        <td>
+            <span [routerLink]="['/search']">search</span>
+        </td>
+        <td>
+            <span [routerLink]="['/results']">results</span>
+        </td>
+        <td>
+            <span [routerLink]="['/details']">details</span>
+        </td>
+        <td>
+            <span [routerLink]="['/comment']">comment</span>
+        </td>
+        <td>
+            <span [routerLink]="['/home']">home</span>
+        </td>
+        <td>
+            <span [routerLink]="['/login']">login</span>
+        </td>
+    </tr>
+</table>
+
+<form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+    <table> 
+        <tr>
+            <td>Email:</td>
+            <td>
+                <input type="text" formControlName="email">
+            </td>
+        </tr>
+        <tr>
+            <td>PW:</td>
+            <td>
+                <input type="password" formControlName="password">
+            </td>
+        </tr>
+        <tr>
+            <td><button type="submit" [disabled]="loginForm.invalid">LOGIN</button></td>
+        </tr>
+    </table>
+</form>
+
+<p>New User? Click <button [routerLink]="['/register']">Here</button> To Register!</p>

@@ -1,27 +1,44 @@
 <p>results works!</p>
-<table id="Banner">
+<table class="Banner" >
     <tr>LINKS</tr>
     <tr>
         <td>
-            <span [routerLink]="['/register']">Register</span>
+            <button [routerLink]="['/register']">Register</button>
         </td>
         <td>
-            <span [routerLink]="['/search']">search</span>
+            <button [routerLink]="['/search']">search</button>
         </td>
         <td>
-            <span [routerLink]="['/results']">results</span>
+            <button [routerLink]="['/results']">results</button>
         </td>
         <td>
-            <span [routerLink]="['/details']">details</span>
+            <button [routerLink]="['/details']">details</button>
         </td>
         <td>
-            <span [routerLink]="['/comment']">comment</span>
+            <button [routerLink]="['/comment']">comment</button>
         </td>
         <td>
-            <span [routerLink]="['/home']">home</span>
+            <button [routerLink]="['/home']">home</button>
         </td>
         <td>
-            <span [routerLink]="['/login']">login</span>
+            <button [routerLink]="['/login']">login</button>
         </td>
     </tr>
 </table>
+
+<div *ngIf="tihResp; else elseblock">
+    <table   *ngFor="let location of locations; let i = index" border="1px" width = "75%">
+        <tr>
+            <td width="25%">{{location.uuid}}</td>
+            <td width="40%"><a [routerLink]="['/details',i]">{{location.name}}</a></td>
+            <td width="15%">{{location.nearestMrtStation}}</td>
+            <td width="25%">{{location.description}}</td>
+        </tr>
+    </table>
+</div>
+<ng-template #elseblock>
+    <div>
+        <p>No Results Found :(</p>
+        <button [routerLink]="['/search']">Back</button>
+    </div>
+</ng-template>

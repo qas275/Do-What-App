@@ -1,6 +1,113 @@
 package VTTP.FinalProj.models;
 
+import jakarta.json.JsonObject;
+
 public class Location {
+
+    private String uuid;
+    private String name;
+    private GeoCode geoCode;
+    private String description;
+    private Address address;
+    private Image[] images;
+    private String dataset;
+    private Review[] review;
+    private Contact contact;
+    private String mrt;
+    private String website;
+    private String email;
+    public String getUuid() {
+        return uuid;
+    }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public GeoCode getGeoCode() {
+        return geoCode;
+    }
+    public void setGeoCode(GeoCode geoCode) {
+        this.geoCode = geoCode;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public Address getAddress() {
+        return address;
+    }
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+    public Image[] getImages() {
+        return images;
+    }
+    public void setImages(Image[] images) {
+        this.images = images;
+    }
+    public String getDataset() {
+        return dataset;
+    }
+    public void setDataset(String dataset) {
+        this.dataset = dataset;
+    }
+    public Review[] getReview() {
+        return review;
+    }
+    public void setReview(Review[] review) {
+        this.review = review;
+    }
+    public Contact getContact() {
+        return contact;
+    }
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+    public String getMrt() {
+        return mrt;
+    }
+    public void setMrt(String mrt) {
+        this.mrt = mrt;
+    }
+    public String getWebsite() {
+        return website;
+    }
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public static Location createLoc(JsonObject locJSON){
+        Location location = new Location();
+        location.uuid = locJSON.getString("uuid");
+        location.name = locJSON.getString("name");
+        location.geoCode = GeoCode.createGeoCode(locJSON.getJsonObject("location"));
+        location.description = locJSON.getString("description");
+        location.address = Address.createAddress(locJSON.getJsonObject("address"));
+        location.images = Image.createImages(locJSON.getJsonArray("images"));
+        location.dataset = locJSON.getString("dataset");
+        location.review = Review.createReviews(locJSON.getJsonArray("reviews"));
+        location.contact = Contact.createContact(locJSON.getJsonObject("contact"));
+        location.mrt = locJSON.getString("nearestMrtStation");
+        location.website = locJSON.getString("officialWebsite");
+        location.email = locJSON.getString("officialEmail");
+        return location;
+    }
+
+
+
     /* sample restaurant
      * {
     "status": {

@@ -3,6 +3,7 @@ package VTTP.FinalProj.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import VTTP.FinalProj.models.User;
 import VTTP.FinalProj.repositories.ApiRepository;
 import VTTP.FinalProj.repositories.DatabaseRepository;
 
@@ -24,5 +25,10 @@ public class GeneralService {
 
     public String search(String keyword){
         return aRepo.searchRestaurantByKeyword(keyword);
+    }
+
+    public void saveFav(User user){
+        dbRepo.saveFav(user);
+
     }
 }

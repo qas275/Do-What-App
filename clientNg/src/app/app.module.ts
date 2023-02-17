@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   {path:"", component:LoginComponent},
   {path:"search", component:SearchComponent},
   {path:"results", component:ResultsComponent},
-  {path:"details", component:DetailsComponent},
+  {path:"details/:idx", component:DetailsComponent},
   {path:"comment", component:CommentComponent},
   {path:"home", component:HomeComponent},
   {path:"register", component:RegisterComponent},

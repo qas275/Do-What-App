@@ -27,11 +27,7 @@ export class SearchComponent implements OnInit{
   }
 
   async search(){
-    let response = await this.svc.search(this.searchForm.controls['keyword'].value)
-    console.log({response})
-    response.data.forEach(element => {
-      console.log(element.name)
-    });
+    this.svc.response = await this.svc.search(this.searchForm.controls['keyword'].value)
     this.router.navigate(['/results'])
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, lastValueFrom } from 'rxjs'
-import { TIHResponse } from '../models';
+import { TIHLocation, TIHResponse, userAllDetails } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,10 @@ import { TIHResponse } from '../models';
 export class GeneralService {
 
   constructor( private http:HttpClient) { }
+
+  response!: TIHResponse;
+  selectedIdx = 0;
+  user!:userAllDetails;
 
   async checkLogin(email:string, password: string){
     let params =  new HttpParams().set('email', email).set('password', password);
@@ -44,6 +48,17 @@ export class GeneralService {
     let params = new HttpParams().set('keyword', keyword);
     console.log("INIT SEARCH")
     return lastValueFrom(this.http.get<TIHResponse>('http://localhost:8080/search', {params:params}))
+  }
+
+  async saveFavourite(location:TIHLocation){
+    if(this.user.favorites.filter(v=>{v.uuid==location.uuid}).length<1){
+      this.user.favorites.push(location);
+    }
+    let response = await lastValueFrom(this.http.post('http://localhost:8080/addFav',this.user)).then(
+      (res) =>{
+        console.log(res)
+        return res;
+      })
   }
 
   

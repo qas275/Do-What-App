@@ -1,5 +1,5 @@
 <p>details works!</p>
-<table id="Banner">
+<table class="Banner">
     <tr>LINKS</tr>
     <tr>
         <td>
@@ -25,3 +25,28 @@
         </td>
     </tr>
 </table>
+
+<table *ngIf="selectedlocation">
+    <tr>
+        <td>{{selectedlocation.name}}</td>
+    </tr>
+    <tr>
+        <td>{{selectedlocation.description}}</td>
+    </tr>
+    <tr>
+        <td>{{selectedlocation.uuid}}</td>
+    </tr>
+    <tr>
+        <td>{{selectedlocation.nearestMrtStation}}</td>
+    </tr>
+    <tr>
+        <td>{{selectedlocation.contact.primaryContactNo}}</td>
+    </tr>
+    <tr>
+        <td>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</td>
+    </tr>
+</table>
+
+<button type="button" (onclick)="save()">Save to Favourites</button>
+<button type="button" [routerLink]="['/results']">Back to Results</button>
+<button type="button" [routerLink]="['/search']">New Search</button>

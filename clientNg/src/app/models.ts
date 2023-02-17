@@ -1,15 +1,16 @@
-export interface userFavourites{
+export interface userAllDetails{
     email:string
+    favorites:TIHLocation[]
 }
 
 export interface TIHResponse{
     status:TIHResponseStatusCode
-    data:TIHLocationDetails[]
+    data:TIHLocation[]
     totalRecords:number
     retrievedRecords:number
 }
 
-export interface TIHLocationDetails{
+export interface TIHLocation{
     uuid:string
     name:string
     location:TIHgeoCode

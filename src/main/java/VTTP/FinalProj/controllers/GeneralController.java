@@ -1,5 +1,7 @@
 package VTTP.FinalProj.controllers;
 
+import java.io.StringReader;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import VTTP.FinalProj.models.User;
 import VTTP.FinalProj.services.GeneralService;
 import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 
 @Controller
@@ -56,5 +60,15 @@ public class GeneralController {
     public ResponseEntity<String> searchRestaurant(@RequestParam String keyword){
         String resp = gSvc.search(keyword);
         return ResponseEntity.status(HttpStatus.OK).body(resp);
+    }
+
+    @PostMapping(path = "/addFav")
+    @ResponseBody
+    public ResponseEntity<String> addFavouritePlace(@RequestBody String userJSONString){
+        JsonObject userJSON = Json.createReader(new StringReader(userJSONString)).readObject();
+        //TODO saving
+        User user = User.createUser(userJSON);
+        gSvc.saveFav(user);
+        return ResponseEntity.status(HttpStatus.OK).body(userJSON.toString());
     }
 }

@@ -5,6 +5,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+
+import VTTP.FinalProj.models.User;
+
 import static VTTP.FinalProj.repositories.Queries.*;
 
 @Repository
@@ -29,6 +32,10 @@ public class DatabaseRepository {
     public boolean registerSQL(String email, String password){
         int res = jdbcTemplate.update(REGISTER_Q, email, password);
         return res>0;
+    }
+
+    public void saveFav(User user){
+
     }
     
 }

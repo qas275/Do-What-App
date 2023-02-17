@@ -12,7 +12,7 @@ export class GeneralService {
 
   response!: TIHResponse;
   selectedIdx = 0;
-  user!:userAllDetails;
+  user:userAllDetails = {email:'',favorites:[]};
 
   async checkLogin(email:string, password: string){
     let params =  new HttpParams().set('email', email).set('password', password);
@@ -22,6 +22,7 @@ export class GeneralService {
         return res;
       }
     );
+    this.user.email = email;
     console.log(response);
     return JSON.parse(JSON.stringify(response));
   }
@@ -54,6 +55,9 @@ export class GeneralService {
     if(this.user.favorites.filter(v=>{v.uuid==location.uuid}).length<1){
       this.user.favorites.push(location);
     }
+    this.user.email = sessionStorage.getItem('email')!
+
+    console.log("BEFORE SAVING WHAT IS USER??? >>> "+this.user.email);
     let response = await lastValueFrom(this.http.post('http://localhost:8080/addFav',this.user)).then(
       (res) =>{
         console.log(res)

@@ -3,16 +3,16 @@ package VTTP.FinalProj.models;
 import jakarta.json.JsonObject;
 
 public class Address {
-    private int block;
+    private String block;
     private String street;
     private String floor;
     private String unit;
     private String building;
-    private int postal;
-    public int getBlock() {
+    private String postal;
+    public String getBlock() {
         return block;
     }
-    public void setBlock(int block) {
+    public void setBlock(String block) {
         this.block = block;
     }
     public String getStreet() {
@@ -39,20 +39,20 @@ public class Address {
     public void setBuilding(String building) {
         this.building = building;
     }
-    public int getPostal() {
+    public String getPostal() {
         return postal;
     }
-    public void setPostal(int postal) {
+    public void setPostal(String postal) {
         this.postal = postal;
     }
     public static Address createAddress(JsonObject jsonObject) {
         Address address = new Address();
-        address.block = jsonObject.getInt("block");
+        address.block = jsonObject.get("block").toString();
         address.street = jsonObject.getString("streetName");
         address.floor = jsonObject.getString("floorNumber");
         address.unit = jsonObject.getString("unitNumber");
         address.building = jsonObject.getString("buildingName");
-        address.postal = jsonObject.getInt("postalCode");
+        address.postal = jsonObject.getString("postalCode");
         return address;
     }
 

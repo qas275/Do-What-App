@@ -27,8 +27,7 @@ public class GeneralService {
         return aRepo.searchRestaurantByKeyword(keyword);
     }
 
-    public void saveFav(User user){
-        dbRepo.saveFav(user);
-
+    public int saveFav(User user){
+        return dbRepo.saveFav(user);
     }
 }

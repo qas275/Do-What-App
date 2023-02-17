@@ -68,7 +68,8 @@ public class GeneralController {
         JsonObject userJSON = Json.createReader(new StringReader(userJSONString)).readObject();
         //TODO saving
         User user = User.createUser(userJSON);
-        gSvc.saveFav(user);
-        return ResponseEntity.status(HttpStatus.OK).body(userJSON.toString());
+        int res = gSvc.saveFav(user);
+        JsonObject jo = Json.createObjectBuilder().add("modified count", res).build();
+        return ResponseEntity.status(HttpStatus.OK).body(jo.toString());
     }
 }

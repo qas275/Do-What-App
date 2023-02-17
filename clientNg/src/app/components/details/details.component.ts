@@ -24,6 +24,7 @@ export class DetailsComponent implements OnInit {
   }
 
   save(){
+    console.log("SAVING")
     this.svc.saveFavourite(this.selectedlocation).then(
       v=>console.log(v)
     );

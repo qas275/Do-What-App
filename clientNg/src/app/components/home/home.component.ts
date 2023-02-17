@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit{
     const email = sessionStorage.getItem('email');
     if(email){
       this.email = email;
+      this.svc.user.email = email;
     }
     
   }

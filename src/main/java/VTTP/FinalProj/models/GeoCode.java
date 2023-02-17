@@ -19,8 +19,8 @@ public class GeoCode {
     }
     public static GeoCode createGeoCode(JsonObject geoJSON) {
         GeoCode geoCode = new GeoCode();
-        geoCode.latitude  =geoJSON.getString("latitude");
-        geoCode.longitude  =geoJSON.getString("longitude");
+        geoCode.latitude  =geoJSON.get("latitude").toString();
+        geoCode.longitude  =geoJSON.get("longitude").toString();
         return geoCode;
     }    
 }

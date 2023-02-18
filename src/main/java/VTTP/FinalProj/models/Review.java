@@ -4,30 +4,30 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 
 public class Review {
-    private String author;
-    private String url;
-    private String lang;
+    private String authorName;
+    private String authorURL;
+    private String language;
     private String profilePhoto;
     private int rating;
     private String text;
     private String time;
-    public String getAuthor() {
-        return author;
+    public String getAuthorName() {
+        return authorName;
     }
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
-    public String getUrl() {
-        return url;
+    public String getAuthorURL() {
+        return authorURL;
     }
-    public void setUrl(String url) {
-        this.url = url;
+    public void setAuthorURL(String authorURL) {
+        this.authorURL = authorURL;
     }
-    public String getLang() {
-        return lang;
+    public String getLanguage() {
+        return language;
     }
-    public void setLang(String lang) {
-        this.lang = lang;
+    public void setLanguage(String language) {
+        this.language = language;
     }
     public String getProfilePhoto() {
         return profilePhoto;
@@ -63,9 +63,9 @@ public class Review {
 
     public static Review createReview(JsonObject jo){
         Review review = new Review();
-        review.author = jo.getString("authorName");
-        review.url = jo.getString("authorURL");
-        review.lang = jo.getString("language");
+        review.authorName = jo.getString("authorName");
+        review.authorURL = jo.getString("authorURL");
+        review.language = jo.getString("language");
         review.profilePhoto = jo.getString("profilePhoto");
         review.rating = jo.getInt("rating");
         review.text = jo.getString("text");

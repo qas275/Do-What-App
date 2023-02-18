@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TIHLocation } from 'src/app/models';
 import { GeneralService } from 'src/app/service/general.service';
 
@@ -10,7 +10,7 @@ import { GeneralService } from 'src/app/service/general.service';
 })
 export class DetailsComponent implements OnInit {
 
-  constructor(private activatedRoute:ActivatedRoute, private svc:GeneralService){
+  constructor(private activatedRoute:ActivatedRoute, private svc:GeneralService, private router:Router){
     
   }
 
@@ -28,6 +28,8 @@ export class DetailsComponent implements OnInit {
     this.svc.saveFavourite(this.selectedlocation).then(
       v=>console.log(v)
     );
+    alert("Location Saved!");
+    this.router.navigate(['/home'])
   }
 
 

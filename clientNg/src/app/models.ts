@@ -1,5 +1,6 @@
 export interface userAllDetails{
     email:string
+    numFavs:number
     favorites:TIHLocation[]
 }
 
@@ -13,7 +14,7 @@ export interface TIHResponse{
 export interface TIHLocation{
     uuid:string
     name:string
-    location:TIHgeoCode
+    location:location
     description:string
     address:TIHaddress
     images:TIHImageDetails[]
@@ -25,7 +26,7 @@ export interface TIHLocation{
     officialEmail:string
 }
 
-export interface TIHgeoCode{
+export interface location{
     latitude:number
     longitude:number
 }

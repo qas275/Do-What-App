@@ -11,10 +11,15 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.client.result.UpdateResult;
+import com.mysql.cj.xdevapi.JsonArray;
 
 import VTTP.FinalProj.models.User;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
 
 import static VTTP.FinalProj.repositories.Queries.*;
+
+import java.util.List;
 
 @Repository
 public class DatabaseRepository {
@@ -45,11 +50,24 @@ public class DatabaseRepository {
     public int saveFav(User user){
         Criteria c = Criteria.where("email").is(user.getEmail());
         Query q = Query.query(c);
-        Update update = new Update().set("favorties", user.getfavorites());
+        Update update = new Update().set("favorites", user.getfavorites()).set("numFavs", user.getNumFavs());
         UpdateResult res = mongoTemplate.upsert(q, update, Document.class, MONGO_COLLECTION_USERS_DATA);
         return (int) res.getModifiedCount();
     }
     
+    public String loadFav(String email){
+        Criteria c = Criteria.where("email").is(email);
+        Query q = Query.query(c);
+        List<Document> res = mongoTemplate.find(q, Document.class, MONGO_COLLECTION_USERS_DATA);
+        if(!res.isEmpty()){
+            return res.get(0).toJson();
+        }else{
+            JsonObjectBuilder job = Json.createObjectBuilder();
+            job.add("email", email);
+            job.add("numFavs", 0);
+            return job.build().toString();
+        }
+    }
 }
 
 

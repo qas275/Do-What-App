@@ -1,5 +1,6 @@
 package VTTP.FinalProj.services;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,9 @@ public class GeneralService {
 
     public int saveFav(User user){
         return dbRepo.saveFav(user);
+    }
+
+    public String loadFav(String email){
+        return dbRepo.loadFav(email);
     }
 }

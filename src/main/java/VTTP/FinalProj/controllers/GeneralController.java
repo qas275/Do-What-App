@@ -2,6 +2,7 @@ package VTTP.FinalProj.controllers;
 
 import java.io.StringReader;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,13 @@ public class GeneralController {
         return ResponseEntity.status(HttpStatus.OK).body(job.build().toString());
     }
 
+    @GetMapping(path = "/load")
+    @ResponseBody
+    public ResponseEntity<String> load(@RequestParam String email){
+        String res = gSvc.loadFav(email);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
     @GetMapping(path = "/search")
     @ResponseBody
     public ResponseEntity<String> searchRestaurant(@RequestParam String keyword){
@@ -66,6 +74,7 @@ public class GeneralController {
     @ResponseBody
     public ResponseEntity<String> addFavouritePlace(@RequestBody String userJSONString){
         JsonObject userJSON = Json.createReader(new StringReader(userJSONString)).readObject();
+        System.out.println(userJSON.toString());
         //TODO saving
         User user = User.createUser(userJSON);
         int res = gSvc.saveFav(user);

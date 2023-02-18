@@ -4,55 +4,55 @@ import jakarta.json.JsonObject;
 
 public class Address {
     private String block;
-    private String street;
-    private String floor;
-    private String unit;
-    private String building;
-    private String postal;
+    private String streetName;
+    private String floorNumber;
+    private String unitNumber;
+    private String buildingName;
+    private String postalCode;
     public String getBlock() {
         return block;
     }
     public void setBlock(String block) {
         this.block = block;
     }
-    public String getStreet() {
-        return street;
+    public String getStreetName() {
+        return streetName;
     }
-    public void setStreet(String street) {
-        this.street = street;
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
-    public String getFloor() {
-        return floor;
+    public String getFloorNumber() {
+        return floorNumber;
     }
-    public void setFloor(String floor) {
-        this.floor = floor;
+    public void setFloorNumber(String floorNumber) {
+        this.floorNumber = floorNumber;
     }
-    public String getUnit() {
-        return unit;
+    public String getUnitNumber() {
+        return unitNumber;
     }
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setUnitNumber(String unitNumber) {
+        this.unitNumber = unitNumber;
     }
-    public String getBuilding() {
-        return building;
+    public String getBuildingName() {
+        return buildingName;
     }
-    public void setBuilding(String building) {
-        this.building = building;
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
     }
-    public String getPostal() {
-        return postal;
+    public String getPostalCode() {
+        return postalCode;
     }
-    public void setPostal(String postal) {
-        this.postal = postal;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
     public static Address createAddress(JsonObject jsonObject) {
         Address address = new Address();
         address.block = jsonObject.get("block").toString();
-        address.street = jsonObject.getString("streetName");
-        address.floor = jsonObject.getString("floorNumber");
-        address.unit = jsonObject.getString("unitNumber");
-        address.building = jsonObject.getString("buildingName");
-        address.postal = jsonObject.getString("postalCode");
+        address.streetName = jsonObject.getString("streetName");
+        address.floorNumber = jsonObject.getString("floorNumber");
+        address.unitNumber = jsonObject.getString("unitNumber");
+        address.buildingName = jsonObject.getString("buildingName");
+        address.postalCode = jsonObject.getString("postalCode");
         return address;
     }
 

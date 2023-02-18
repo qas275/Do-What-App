@@ -39,11 +39,17 @@ export class LoginComponent implements OnInit{
         console.log(password);
         console.log(login);
         sessionStorage.setItem('email', this.email)
+        // this.load(this.email);
+        // console.log("login", this.svc.svcUser)
         this.router.navigate(['/home'])
       }else{
         alert("email: "+this.email+ " and password "+password+" does not exist or not match");
         this.ngOnInit();
       }
     });
+  }
+
+  async load(email:string){
+    await this.svc.loadFavourties(email);
   }
 }

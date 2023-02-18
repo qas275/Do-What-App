@@ -2,21 +2,27 @@ package VTTP.FinalProj.models;
 
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonValue;
 
 public class User {
     private String email;
-    private Location[] favorites;
+    private int numFavs;
+    private TIHLocation[] favorites;
+    public int getNumFavs() {
+        return numFavs;
+    }
+    public void setNumFavs(int numFavs) {
+        this.numFavs = numFavs;
+    }
     public String getEmail() {
         return email;
     }
     public void setEmail(String email) {
         this.email = email;
     }
-    public Location[] getfavorites() {
+    public TIHLocation[] getfavorites() {
         return favorites;
     }
-    public void setfavorites(Location[] favorites) {
+    public void setfavorites(TIHLocation[] favorites) {
         this.favorites = favorites;
     }
 
@@ -25,9 +31,15 @@ public class User {
         User user = new User();
         user.email = userJSON.getString("email");
         JsonArray locations = userJSON.getJsonArray("favorites");
-        user.favorites = new Location[locations.size()];
+        user.favorites = new TIHLocation[locations.size()];
+        user.numFavs = userJSON.getInt("numFavs");
         for(int i=0; i<locations.size();i++){
-            user.favorites[i] = Location.createLoc(locations.getJsonObject(i));
+            System.out.println(i+ " \n\n\n\n");
+            System.out.println("WHAT IS LOCATION \n\n\n\n");
+            System.out.println(locations.getJsonObject(i));
+            user.favorites[i] = TIHLocation.createLoc(locations.getJsonObject(i));
+            System.out.println(user.favorites[i].getLocation().getLatitude());
+
         }
         return user;
     }

@@ -6,8 +6,8 @@ import jakarta.json.JsonObject;
 public class Image {
     private String uuid;
     private String url;
-    private String libUUID;
-    private String fileMedium;
+    private String libraryUuid;
+    private String primaryFileMediumUuid;
     public String getUuid() {
         return uuid;
     }
@@ -20,17 +20,17 @@ public class Image {
     public void setUrl(String url) {
         this.url = url;
     }
-    public String getLibUUID() {
-        return libUUID;
+    public String getLibraryUuid() {
+        return libraryUuid;
     }
-    public void setLibUUID(String libUUID) {
-        this.libUUID = libUUID;
+    public void setLibraryUuid(String libraryUuid) {
+        this.libraryUuid = libraryUuid;
     }
-    public String getFileMedium() {
-        return fileMedium;
+    public String getPrimaryFileMediumUuid() {
+        return primaryFileMediumUuid;
     }
-    public void setFileMedium(String fileMedium) {
-        this.fileMedium = fileMedium;
+    public void setPrimaryFileMediumUuid(String primaryFileMediumUuid) {
+        this.primaryFileMediumUuid = primaryFileMediumUuid;
     }
     public static Image[] createImages(JsonArray jsonArray) {
         Image[] images = new Image[jsonArray.size()];
@@ -44,8 +44,8 @@ public class Image {
         Image image = new Image();
         image.uuid = jo.getString("uuid");
         image.url = jo.getString("url");
-        image.libUUID = jo.getString("libraryUuid");
-        image.fileMedium = jo.getString("primaryFileMediumUuid");
+        image.libraryUuid = jo.getString("libraryUuid");
+        image.primaryFileMediumUuid = jo.getString("primaryFileMediumUuid");
         return image;
     }
     

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { userAllDetails } from 'src/app/models';
 import { GeneralService } from 'src/app/service/general.service';
 
 @Component({
@@ -12,13 +13,25 @@ export class HomeComponent implements OnInit{
   }
   
   email!: string;
+  user!: userAllDetails;
 
   ngOnInit(): void {
     const email = sessionStorage.getItem('email');
+    console.log(email)
     if(email){
       this.email = email;
-      this.svc.user.email = email;
+      // this.svc.svcUser.email = email;
+      let res = this.load(email)
+      
+      console.log("in home",this.svc.svcUser)
+      this.user = this.svc.svcUser
     }
-    
+  }
+
+  
+  async load(email:string){
+    this.user = await this.svc.loadFavourties(email);
+    console.log("asdasdad")
+    return this.user.numFavs;
   }
 }

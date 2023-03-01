@@ -10,19 +10,21 @@ import { GeneralService } from 'src/app/service/general.service';
 })
 export class ResultsComponent implements OnInit{
 
-  constructor(private svc:GeneralService, private router:Router){
+  constructor(protected svc:GeneralService, private router:Router){
 
   }
 
+  keyword = ""
   tihResp?:TIHResponse;
-  locations?:TIHLocation[];
 
   ngOnInit(): void {
-      this.tihResp = this.svc.response;
-      this.locations = this.tihResp?.data;
+    this.keyword = this.svc.keyword
+    this.tihResp = this.svc.response;
+    this.svc.searchResults = this.tihResp?.data;
   }
 
-
-
-
+  nav(idx:number){
+    this.svc.selectedLocation = this.svc.searchResults[idx];
+    this.router.navigate(['/details']);
+  }
 }

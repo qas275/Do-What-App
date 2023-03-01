@@ -27,11 +27,11 @@
     </tr>
 </table>
 <div *ngIf="user.numFavs>0">
-    <table *ngFor="let location of user.favorites; let idx = index">
-        <tr>
+    <table border="1px">
+        <tr><td>Index</td><td>Name</td></tr>
+        <tr *ngFor="let location of user.favorites; let idx = index">
             <td>{{idx+1}}</td>
-            <td>Name:</td>
-            <td><a [routerLink]="['/details']"></a>{{location.name | titlecase}}</td>
+            <td (click)="nav(idx)">{{location.name | titlecase}}</td>
         </tr>
     </table>
 </div>

@@ -11,7 +11,27 @@ create table if not exists users(
     primary key(email)
 );
 
-insert into users(email, password) values ('a1@email.com', 'pw1');
-insert into users(email, password) values ('account1', 'password2');
+create table if not exists comments(
+	post_id integer not null auto_increment,
+    user_email varchar(128),
+    location_id varchar(128) not null,
+    comments text,
+    rating integer,
+    image_url varchar(128),
+
+    
+    primary key(post_id),
+    
+    constraint fk_user_email
+		foreign key (user_email) references users(email)
+);
 
 select * from users;
+
+insert ignore into users(email, password) values ('a2@email.com', 'pw2');
+
+select * from users where BINARY email='A1@email.com';
+
+select * from comments;
+
+select count(image_url)>0 as dup_ from comments where image_url = "a";

@@ -17,7 +17,6 @@ export class SearchComponent implements OnInit{
 
   ngOnInit(): void {
       this.searchForm = this.createSearchForm();
-  
   }
 
   createSearchForm(){
@@ -27,7 +26,8 @@ export class SearchComponent implements OnInit{
   }
 
   async search(){
-    this.svc.response = await this.svc.search(this.searchForm.controls['keyword'].value)
+    this.svc.keyword = this.searchForm.controls['keyword'].value
+    this.svc.response = await this.svc.search(this.svc.keyword)
     this.router.navigate(['/results'])
   }
 }

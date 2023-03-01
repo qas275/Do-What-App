@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { userAllDetails } from 'src/app/models';
 import { GeneralService } from 'src/app/service/general.service';
 
@@ -8,7 +9,7 @@ import { GeneralService } from 'src/app/service/general.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
-  constructor(private svc: GeneralService){
+  constructor(private svc: GeneralService, private router:Router){
 
   }
   
@@ -20,18 +21,21 @@ export class HomeComponent implements OnInit{
     console.log(email)
     if(email){
       this.email = email;
-      // this.svc.svcUser.email = email;
-      let res = this.load(email)
-      
-      console.log("in home",this.svc.svcUser)
+      this.svc.svcUser.email = email;
+      this.load(email)
       this.user = this.svc.svcUser
+      console.log("init home with ",this.svc.svcUser)
     }
   }
 
   
   async load(email:string){
-    this.user = await this.svc.loadFavourties(email);
-    console.log("asdasdad")
-    return this.user.numFavs;
+    let res = await this.svc.loadFavourties(email);
+    console.log(res)
+  }
+
+  nav(idx:number){
+    this.svc.selectedLocation = this.user.favorites[idx];
+    this.router.navigate(['/details']);
   }
 }

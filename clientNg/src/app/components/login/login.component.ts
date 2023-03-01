@@ -36,11 +36,8 @@ export class LoginComponent implements OnInit{
       console.log(v); 
       login = v.login;
       if(login=='true'){
-        console.log(password);
-        console.log(login);
+        console.log("Logging in with "+this.email+password);
         sessionStorage.setItem('email', this.email)
-        // this.load(this.email);
-        // console.log("login", this.svc.svcUser)
         this.router.navigate(['/home'])
       }else{
         alert("email: "+this.email+ " and password "+password+" does not exist or not match");

@@ -12,16 +12,18 @@ import { DetailsComponent } from './components/details/details.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const appRoutes: Routes = [
   {path:"login", component:LoginComponent},
   {path:"", component:LoginComponent},
   {path:"search", component:SearchComponent},
   {path:"results", component:ResultsComponent},
-  {path:"details/:idx", component:DetailsComponent},
+  {path:"details", component:DetailsComponent},
   {path:"comment", component:CommentComponent},
   {path:"home", component:HomeComponent},
   {path:"register", component:RegisterComponent},
+  {path:"profile", component:ProfileComponent},
   {path:"**", redirectTo:'/', pathMatch:'full'}
 ]
 
@@ -34,10 +36,11 @@ const appRoutes: Routes = [
     DetailsComponent,
     CommentComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)
+    BrowserModule, ReactiveFormsModule, HttpClientModule, RouterModule.forRoot(appRoutes, {useHash:true})
   ],
   providers: [],
   bootstrap: [AppComponent]

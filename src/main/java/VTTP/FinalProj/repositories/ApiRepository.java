@@ -26,6 +26,5 @@ public class ApiRepository {
         System.out.println(urlToSend);
         ResponseEntity<String> resp = restTemplate.exchange(urlToSend, HttpMethod.GET, entity, String.class);
         return resp.getBody();
-
     }
 }

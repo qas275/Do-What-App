@@ -24,6 +24,17 @@ export interface TIHLocation{
     nearestMrtStation:string
     officialWebsite:string
     officialEmail:string
+    locationComments:LocationComment[]
+    fav:boolean;
+}
+
+export interface LocationComment{
+    post_id:string
+    email:string
+    comment:string
+    rating:number
+    imageUUID:string
+    locationUUID:string
 }
 
 export interface location{

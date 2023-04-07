@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
+import { DataService } from 'src/app/service/data.service';
 import { GeneralService } from 'src/app/service/general.service';
 
 @Component({
@@ -10,7 +12,7 @@ import { GeneralService } from 'src/app/service/general.service';
 })
 export class RegisterComponent implements OnInit{
 
-  constructor(private svc: GeneralService, private fb: FormBuilder, private router:Router){
+  constructor(private dataSvc:DataService, private authSvc:AuthService, private svc: GeneralService, private fb: FormBuilder, private router:Router){
 
   }
 
@@ -30,9 +32,9 @@ export class RegisterComponent implements OnInit{
   register(){
     let email = this.registrationForm.controls['email'].value
     let password = this.registrationForm.controls['password'].value
-    this.svc.register(email,password).then((v) =>{
+    this.authSvc.register(email,password).then((v) =>{
       console.log(v); 
-      let reg = v.registration;
+      let reg = v;
       if(reg=='true'){
         console.log(password);
         console.log(reg);

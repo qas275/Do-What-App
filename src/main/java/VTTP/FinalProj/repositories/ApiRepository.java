@@ -1,5 +1,6 @@
 package VTTP.FinalProj.repositories;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,7 +14,8 @@ public class ApiRepository {
 
     //TIH set apikey as X-API_KEY in headers, query dataset param and keyword param
     
-    private static final String  TIH_KEY ="";
+    @Value("${TIH_API_KEY}")
+    private String TIH_KEY;
 
     private String TIH_MULTI_SEARCH = "https://api.stb.gov.sg/content/common/v2/search";
 

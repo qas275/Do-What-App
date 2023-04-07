@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TIHLocation, TIHResponse } from 'src/app/models';
+import { DataService } from 'src/app/service/data.service';
 import { GeneralService } from 'src/app/service/general.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { GeneralService } from 'src/app/service/general.service';
 })
 export class ResultsComponent implements OnInit{
 
-  constructor(protected svc:GeneralService, private router:Router){
+  constructor(protected dataSvc:DataService ,private svc:GeneralService, private router:Router){
 
   }
 
@@ -18,13 +19,13 @@ export class ResultsComponent implements OnInit{
   tihResp?:TIHResponse;
 
   ngOnInit(): void {
-    this.keyword = this.svc.keyword
-    this.tihResp = this.svc.response;
-    this.svc.searchResults = this.tihResp?.data;
+    this.keyword = this.dataSvc.keyword
+    this.tihResp = this.dataSvc.response;
+    this.dataSvc.searchResults = this.tihResp?.data;
   }
 
   nav(idx:number){
-    this.svc.selectedLocation = this.svc.searchResults[idx];
+    this.dataSvc.selectedLocation = this.dataSvc.searchResults[idx];
     this.router.navigate(['/details']);
   }
 }

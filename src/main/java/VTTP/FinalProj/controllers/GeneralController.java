@@ -7,8 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,31 +31,7 @@ public class GeneralController {
     @Autowired
     GeneralService gSvc;
     
-    @GetMapping(path = "/login")
-    @ResponseBody
-    public ResponseEntity<String> checkLogin(@RequestParam String email, @RequestParam String password){
-        JsonObjectBuilder job = Json.createObjectBuilder();
-        if(gSvc.checkLogin(email, password)){
-            job.add("login", "true");
-        }else{
-            job.add("login", "false");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(job.build().toString());
-    }
-
-    @PostMapping(path = "/register")
-    @ResponseBody
-    public ResponseEntity<String> register(@RequestBody MultiValueMap<String, String> body){
-        String email = body.getFirst("email");
-        String password = body.getFirst("password");
-        JsonObjectBuilder job = Json.createObjectBuilder();
-        if(gSvc.register(email, password)){
-            job.add("registration", "true");
-        }else{
-            job.add("registration", "false");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(job.build().toString());
-    }
+    
 
     @GetMapping(path = "/load")
     @ResponseBody
@@ -116,11 +91,17 @@ public class GeneralController {
         return ResponseEntity.status(HttpStatus.OK).body(jo.toString());
     }
 
-    @GetMapping(path = "/deleteUser")
+    @DeleteMapping(path = "/deleteUser")
     @ResponseBody
     public ResponseEntity<String> deleteUser(@RequestParam String email){
-        
-        return null;
+        JsonObjectBuilder job = Json.createObjectBuilder();
+        try {
+            gSvc.deleteUserAndComments(email);
+            job.add("response", "ok").build();
+        } catch (Exception e) {
+            job.add("response", e.toString()).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(job.build().toString());
     }
 
 

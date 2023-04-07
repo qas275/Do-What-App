@@ -1,4 +1,4 @@
-package VTTP.FinalProj;
+package VTTP.FinalProj.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +11,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Configuration
-public class AppConfig {
-    
-
+public class S3Config {
     @Value("${SPACES_ACCESS}")
     public String spacesAccess;
     @Value("${SPACES_SECRET}")
@@ -25,4 +23,5 @@ public class AppConfig {
         EndpointConfiguration epConfiguration = new EndpointConfiguration("sgp1.digitaloceanspaces.com", "sgp1");
         return AmazonS3ClientBuilder.standard().withEndpointConfiguration(epConfiguration).withCredentials(new AWSStaticCredentialsProvider(cred)).build();
     }
+
 }

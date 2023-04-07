@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DataService } from 'src/app/service/data.service';
 import { GeneralService } from 'src/app/service/general.service';
 
 @Component({
@@ -8,12 +10,13 @@ import { GeneralService } from 'src/app/service/general.service';
 })
 export class ProfileComponent {
 
-  constructor(private svc:GeneralService){
+  constructor(private svc:GeneralService, protected dataSvc: DataService, public route:ActivatedRoute){
 
   }
 
   deleteUser(){
     let email = sessionStorage.getItem("email")!;
     this.svc.deleteUser(email);
+    alert('Account Deleted')
   }
 }

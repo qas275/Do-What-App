@@ -3,6 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
+import { GoogleMapsModule } from '@angular/google-maps';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -40,7 +42,7 @@ const appRoutes: Routes = [
     ProfileComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, HttpClientModule, RouterModule.forRoot(appRoutes, {useHash:true})
+    BrowserModule, ReactiveFormsModule, HttpClientModule, GoogleMapsModule,RouterModule.forRoot(appRoutes, {useHash:true})
   ],
   providers: [],
   bootstrap: [AppComponent]

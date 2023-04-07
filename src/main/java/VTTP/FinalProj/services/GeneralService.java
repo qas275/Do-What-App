@@ -1,12 +1,6 @@
 package VTTP.FinalProj.services;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
-
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
@@ -20,7 +14,6 @@ import VTTP.FinalProj.repositories.DatabaseRepository;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
-import jakarta.json.JsonObject;
 
 @Service
 public class GeneralService {
@@ -30,13 +23,7 @@ public class GeneralService {
     @Autowired
     ApiRepository aRepo;
 
-    public boolean checkLogin(String email, String password){
-        return dbRepo.checkLoginSQL(email, password);
-    } 
-
-    public boolean register(String email, String password){
-        return dbRepo.registerSQL(email, password);
-    } 
+    
 
     public String search(String keyword){
         if(dbRepo.checkRedis(keyword)){
@@ -57,7 +44,6 @@ public class GeneralService {
         return dbRepo.loadFav(email);
     }
 
-    //TODO implement transactional
     public void addComment(String email, String location_id, Integer rating, String comment, MultipartFile image){
         String imageUUID = "";
         try{
@@ -82,8 +68,13 @@ public class GeneralService {
         return dbRepo.deleteComment(post_id);
     }
 
-    @Transactional
-    public void deleteUserAndComments(String email){
-        
+    @Transactional(rollbackFor = AcctDeletionException.class)
+    public void deleteUserAndComments(String email) throws AcctDeletionException{
+        if(dbRepo.deleteUserComments(email)<1){
+            throw new AcctDeletionException("SQL DB ERROR: UNABLE TO DELETE COMMENTS");
+        }
+        if(dbRepo.deleteUser(email)<1){
+            throw new AcctDeletionException("SQL DB ERROR: UNABLE TO DELETE USER");
+        };
     }
 }

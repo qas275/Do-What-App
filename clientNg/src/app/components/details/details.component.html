@@ -60,14 +60,16 @@
         <td>{{selectedlocation.fav.toString()}}</td>
     </tr>
 </table>
+<h1>test google maps</h1>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{selectedlocation.location.latitude.toString()}},{{selectedlocation.location.longitude.toString()}}&zoom=14&size=400x400&key=AIzaSyCBsiF-fnqF2OddWShJ_wCYlB4OTK5NTuo" alt="">
 <div *ngIf="selectedlocation.images.length>0">
     <img src={{selectedlocation.images[0].url}} width="500vw">
 </div>
 <br>
 <div *ngIf="selectedlocation?.fav">
     <button type="button" (click)="removeFav()">Delete</button>
-    <button type="button" (click)="addCommentForm()">Comment</button>
-    <div *ngIf="commentForm">
+    <button type="button" (click)="toggleForm()">Comment</button>
+    <div [hidden]="hideForm>0">
         <form [formGroup]="commentForm" (ngSubmit)="addComment()">
             <table>
                 <tr>
@@ -105,7 +107,7 @@
         <span>Comment: {{selectedlocation.locationComments[idx].comment}}</span><br>
         <span>Rating: {{selectedlocation.locationComments[idx].rating}}</span><br>
         <span>Image: {{selectedlocation.locationComments[idx].imageUUID}}</span><br>
-        <img src="https://qas275.sgp1.digitaloceanspaces.com/todo%2F{{selectedlocation.locationComments[idx].imageUUID}}" alt="" width="100vw">
+        <img src="https://vttpws.sgp1.digitaloceanspaces.com/todo%2F{{selectedlocation.locationComments[idx].imageUUID}}" alt="" width="100vw">
         <span>Post_id: {{selectedlocation.locationComments[idx].post_id}}</span>
         <div [hidden]="!emailCheck(idx)">
             <button (click)="deleteComment(selectedlocation.locationComments[idx].post_id)">Delete Comment</button>

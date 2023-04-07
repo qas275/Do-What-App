@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/service/data.service';
 import { GeneralService } from 'src/app/service/general.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { GeneralService } from 'src/app/service/general.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit{
-  constructor(private svc:GeneralService, private fb:FormBuilder, private router: Router){
+  constructor(private svc:GeneralService, private dataSvc: DataService, private fb:FormBuilder, private router: Router){
     
   }
 
@@ -26,8 +27,8 @@ export class SearchComponent implements OnInit{
   }
 
   async search(){
-    this.svc.keyword = this.searchForm.controls['keyword'].value
-    this.svc.response = await this.svc.search(this.svc.keyword)
+    this.dataSvc.keyword = this.searchForm.controls['keyword'].value
+    this.dataSvc.response = await this.svc.search(this.dataSvc.keyword)
     this.router.navigate(['/results'])
   }
 }

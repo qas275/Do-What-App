@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TIHLocation } from 'src/app/models';
+import { DataService } from 'src/app/service/data.service';
 import { GeneralService } from 'src/app/service/general.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { GeneralService } from 'src/app/service/general.service';
 })
 export class DetailsComponent implements OnInit {
 
-  constructor(private activatedRoute:ActivatedRoute, private svc:GeneralService, private router:Router, private fb:FormBuilder){
+  constructor(private activatedRoute:ActivatedRoute,private dataSvc:DataService, private svc:GeneralService, private router:Router, private fb:FormBuilder){
     
   }
 
@@ -19,22 +20,25 @@ export class DetailsComponent implements OnInit {
 
   selectedlocation!:TIHLocation
   commentForm!:FormGroup
+  hideForm=1;
   
   ngOnInit(): void {
-    this.selectedlocation = this.svc.selectedLocation;
+    this.selectedlocation = this.dataSvc.selectedLocation;
     this.selectedlocation.fav = false;
-    this.svc.svcUser.favorites.forEach(loc =>{
+    this.dataSvc.svcUser.favorites.forEach(loc =>{
       if(loc.uuid === this.selectedlocation.uuid){
         this.selectedlocation.fav =true;
       }
     })
+    this.hideForm = 1;
+    this.commentForm = this.createForm();
     this.svc.getComments(this.selectedlocation.uuid).then(v=> {this.selectedlocation.locationComments= v});
     console.log("FAV?", this.selectedlocation.fav);
   }
 
   addFav(){
     console.log("SAVING")
-    this.svc.svcUser.favorites.push(this.selectedlocation);
+    this.dataSvc.svcUser.favorites.push(this.selectedlocation);
     this.svc.saveFavourite().then(
       v=>console.log(v)
     );
@@ -43,18 +47,14 @@ export class DetailsComponent implements OnInit {
   }
   
   removeFav(){
-    const idxRemove = this.svc.svcUser.favorites.findIndex(v => v.uuid===this.selectedlocation.uuid);
+    const idxRemove = this.dataSvc.svcUser.favorites.findIndex(v => v.uuid===this.selectedlocation.uuid);
     console.log(idxRemove)
-    this.svc.svcUser.favorites.splice(idxRemove,1);
+    this.dataSvc.svcUser.favorites.splice(idxRemove,1);
     this.svc.saveFavourite().then(
       v=>console.log("saving" +v)
-    );
+      );
     alert('Removed from Favorites');
     this.router.navigate(['/home'])
-  }
-
-  addCommentForm(){
-    this.commentForm = this.createForm();
   }
 
   createForm(){
@@ -70,8 +70,10 @@ export class DetailsComponent implements OnInit {
     const file = this.picture.nativeElement.files[0]
     this.svc.addComment(file, this.selectedlocation.uuid, 
       this.commentForm.controls['rating'].value, 
-      this.commentForm.controls['comment'].value)
-    
+      this.commentForm.controls['comment'].value);
+    console.log("UPLOADED")
+    alert("COMMENTED")
+    this.commentForm = this.createForm();
   }
 
   emailCheck(idx:number):boolean{
@@ -83,8 +85,13 @@ export class DetailsComponent implements OnInit {
     this.svc.deleteComment(post_id).then(v=>{
       alert("removed comment!")
     });
-    this.router.navigate(['/home'])
-    // this.ngOnInit();
+    this.ngOnInit(); //attempting to reload page instead of redirect to home
+    // this.router.navigate(['/home'])
+  }
+
+  toggleForm(){
+    this.hideForm=this.hideForm*(-1);
+    console.log(this.hideForm)
   }
 
 

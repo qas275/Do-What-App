@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -21,18 +20,17 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.mongodb.client.result.UpdateResult;
 import VTTP.FinalProj.models.User;
 import jakarta.json.Json;
-import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 
 import static VTTP.FinalProj.repositories.Queries.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -63,8 +61,17 @@ public class DatabaseRepository {
         return login;
     }
 
+    public Optional<User> loadUser(String email){
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(LOGIN_Q, email);
+        rs.next();
+        Optional<User> user  = User.createUser(rs);
+        return user;
+    }
+
     public boolean registerSQL(String email, String password){
+        System.out.println(email);
         int res = jdbcTemplate.update(REGISTER_Q, email, password);
+        System.out.println("HELLO"+res);
         return res>0;
     }
 
@@ -149,7 +156,7 @@ public class DatabaseRepository {
             }
         }
         //create a upload request
-        PutObjectRequest putReq = new PutObjectRequest("qas275", "todo/%s".formatted(key), image.getInputStream(),metadata);//bucket name, key of (directory/object key in this case)
+        PutObjectRequest putReq = new PutObjectRequest("vttpws", "todo/%s".formatted(key), image.getInputStream(),metadata);//bucket name, key of (directory/object key in this case)
         
         //allow public access to read only
         putReq.withCannedAcl(CannedAccessControlList.PublicRead);

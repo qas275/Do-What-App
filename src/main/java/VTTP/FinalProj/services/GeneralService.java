@@ -1,6 +1,8 @@
 package VTTP.FinalProj.services;
 
 import java.io.IOException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
@@ -47,8 +49,11 @@ public class GeneralService {
     public void addComment(String email, String location_id, Integer rating, String comment, MultipartFile image){
         String imageUUID = "";
         try{
-            imageUUID = dbRepo.savePictureSpaces(image, email);
-
+            Optional<String> resp = dbRepo.savePictureSpaces(image, email);
+            if(resp.isPresent()){
+                imageUUID = resp.get();
+            }else{
+            }
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -70,10 +75,13 @@ public class GeneralService {
 
     @Transactional(rollbackFor = AcctDeletionException.class)
     public void deleteUserAndComments(String email) throws AcctDeletionException{
+        System.out.println("here");
         if(dbRepo.deleteUserComments(email)<1){
+            System.out.println("comments issue");
             throw new AcctDeletionException("SQL DB ERROR: UNABLE TO DELETE COMMENTS");
         }
         if(dbRepo.deleteUser(email)<1){
+            System.out.println("users issue");
             throw new AcctDeletionException("SQL DB ERROR: UNABLE TO DELETE USER");
         };
     }

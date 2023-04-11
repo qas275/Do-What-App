@@ -65,12 +65,18 @@ constructor( private http:HttpClient, private dataSvc:DataService) { }
     
   deleteUser(email:string){
     let params = new HttpParams().set('email', email);
-    return lastValueFrom(this.http.get('/deleteUser', {params:params,headers:this.setHead()}))
+    return lastValueFrom(this.http.delete('/deleteUser', {params:params,headers:this.setHead()}))
   }
 
   setHead():HttpHeaders{
     let head = 'Bearer'+sessionStorage.getItem('WS_JWT');
     return new HttpHeaders().set("Authorisation", head);
+  }
+
+  logout(){
+    sessionStorage.removeItem('WS_JWT');
+    this.dataSvc.svcUser = {email:"" ,numFavs:0,favorites:[]};
+    alert('Logged out')
   }
 
 

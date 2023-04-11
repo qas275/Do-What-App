@@ -74,6 +74,7 @@ export class DetailsComponent implements OnInit {
     console.log("UPLOADED")
     alert("COMMENTED")
     this.commentForm = this.createForm();
+    this.svc.getComments(this.selectedlocation.uuid).then(v=> {this.selectedlocation.locationComments= v});
   }
 
   emailCheck(idx:number):boolean{
@@ -92,6 +93,11 @@ export class DetailsComponent implements OnInit {
   toggleForm(){
     this.hideForm=this.hideForm*(-1);
     console.log(this.hideForm)
+  }
+
+  logout(){
+    this.svc.logout();
+    this.router.navigate(['/login']);
   }
 
 

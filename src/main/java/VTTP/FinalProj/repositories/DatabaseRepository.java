@@ -132,8 +132,11 @@ public class DatabaseRepository {
         return jdbcTemplate.update(DELETE_COMMENTS_BY_USER, email);
     }
 
-    public String savePictureSpaces(MultipartFile image, String email) throws IOException{
+    public Optional<String> savePictureSpaces(MultipartFile image, String email) throws IOException{
         //set user data
+        if(null==image){
+            return Optional.empty();
+        }
         Map<String, String> userData = new HashMap<>();
         userData.put("email",email);
 
@@ -164,7 +167,7 @@ public class DatabaseRepository {
         //use client to send specified request
         s3Client.putObject(putReq);
 
-        return key;
+        return Optional.of(key);
     }
     
     

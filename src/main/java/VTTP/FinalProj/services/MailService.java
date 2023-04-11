@@ -13,13 +13,16 @@ public class MailService {
     private JavaMailSender mailSender;
 
     public void sendEmail(String receipient, String subject, String body ){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(receipient);
-        message.setSubject(subject);
-        message.setText(body);
-        message.setFrom("weishunlim96@gmail.com");
-
-        mailSender.send(message);
-        System.out.println("SENT MESSAGE!!!");
+        if(!receipient.equals("a1@email.com")&&!receipient.equals("a2@email.com")){
+            
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(receipient);
+            message.setSubject(subject);
+            message.setText(body);
+            message.setFrom("weishunlim96@gmail.com");
+    
+            mailSender.send(message);
+            System.out.println("SENT MESSAGE!!!");
+        }
     }
 }

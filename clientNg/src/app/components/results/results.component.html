@@ -1,34 +1,23 @@
-<p>results works!</p>
-<table class="Banner" >
-    <tr>LINKS</tr>
-    <tr>
-        <td>
-            <button [routerLink]="['/register']">Register</button>
-        </td>
-        <td>
-            <button [routerLink]="['/search']">search</button>
-        </td>
-        <td>
-            <button [routerLink]="['/results']">results</button>
-        </td>
-        <td>
-            <button [routerLink]="['/details']">details</button>
-        </td>
-        <td>
-            <button [routerLink]="['/comment']">comment</button>
-        </td>
-        <td>
-            <button [routerLink]="['/home']">home</button>
-        </td>
-        <td>
-            <button [routerLink]="['/login']">login</button>
-        </td>
-    </tr>
-</table>
+<mat-toolbar color="primary" class="header">
+    <mat-toolbar-row style="text-align: center;display: inline-block;
+    width: 100%;height: 20%;">
+        <span>ZUOMO APP</span>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block;
+    width: 100%;">
+        <a mat-button [routerLink]="['/register']">REGISTER </a>|
+        <a mat-button [routerLink]="['/search']">SEARCH</a>|
+        <a mat-button [routerLink]="['/results']">RESULTS </a>|
+        <a mat-button [routerLink]="['/details']">DETAILS </a>|
+        <a mat-button [routerLink]="['/home']">HOME </a>|
+        <a mat-button [routerLink]="['/login']">LOGIN</a>
+        <a mat-button (click)="logout()">LOGOUT</a>
+    </mat-toolbar-row>
+</mat-toolbar>
 
 <p>Showing Results for: {{keyword|uppercase}}</p>
 
-<div *ngIf="tihResp; else elseblock">
+<div *ngIf="this.dataSvc.searchResults.length>0; else elseblock">
     <table border="1px" width = "75%">
         <tr><td>UUID</td><td>Location Name</td><td>Nearest Mrt</td><td>Description</td></tr>
         <tr *ngFor="let location of dataSvc.searchResults; let i = index">
@@ -36,13 +25,12 @@
             <td width="40%" class="clickable" (click)="nav(i)">{{location.name}}</td>
             <td width="15%">{{location.nearestMrtStation}}</td>
             <td width="25%">{{location.description}}</td>
-            <!-- <td *ngIf="location.comment">{{location.comment}}</td> -->
         </tr>
     </table>
 </div>
 <ng-template #elseblock>
     <div>
-        <p>No Results Found :(</p>
+        <p>No Results Found</p>
         <button [routerLink]="['/search']">Back</button>
     </div>
 </ng-template>

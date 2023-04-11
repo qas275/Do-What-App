@@ -45,4 +45,9 @@ export class HomeComponent implements OnInit{
     this.dataSvc.selectedLocation = this.user.favorites[idx];
     this.router.navigate(['/details']);
   }
+  
+  logout(){
+    this.svc.logout();
+    this.router.navigate(['/login']);
+  }
 }

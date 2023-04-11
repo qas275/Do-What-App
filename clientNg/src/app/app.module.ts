@@ -15,6 +15,8 @@ import { CommentComponent } from './components/comment/comment.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
 
 const appRoutes: Routes = [
   {path:"login", component:LoginComponent},
@@ -42,7 +44,12 @@ const appRoutes: Routes = [
     ProfileComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, HttpClientModule, GoogleMapsModule,RouterModule.forRoot(appRoutes, {useHash:true})
+    BrowserModule, 
+    ReactiveFormsModule, 
+    HttpClientModule, 
+    BrowserAnimationsModule,
+    GoogleMapsModule,RouterModule.forRoot(appRoutes, {useHash:true}), 
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,5 +7,6 @@ public class AcctDeletionException extends Exception{
 
     public AcctDeletionException(String msg){
         super(msg);
+        System.out.println(msg);
     }
 }

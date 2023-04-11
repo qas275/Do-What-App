@@ -1,30 +1,19 @@
-<p>details works!</p>
-<table class="Banner">
-    <tr>LINKS</tr>
-    <tr>
-        <td>
-            <span [routerLink]="['/register']">Register</span>
-        </td>
-        <td>
-            <span [routerLink]="['/search']">search</span>
-        </td>
-        <td>
-            <span [routerLink]="['/results']">results</span>
-        </td>
-        <td>
-            <span [routerLink]="['/details']">details</span>
-        </td>
-        <td>
-            <span [routerLink]="['/comment']">comment</span>
-        </td>
-        <td>
-            <span [routerLink]="['/home']">home</span>
-        </td>
-        <td>
-            <span [routerLink]="['/login']">login</span>
-        </td>
-    </tr>
-</table>
+<mat-toolbar color="primary" class="header">
+    <mat-toolbar-row style="text-align: center;display: inline-block;
+    width: 100%;height: 20%;">
+        <span>ZUOMO APP</span>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block;
+    width: 100%;">
+        <a mat-button [routerLink]="['/register']">REGISTER </a>|
+        <a mat-button [routerLink]="['/search']">SEARCH</a>|
+        <a mat-button [routerLink]="['/results']">RESULTS </a>|
+        <a mat-button [routerLink]="['/details']">DETAILS </a>|
+        <a mat-button [routerLink]="['/home']">HOME </a>|
+        <a mat-button [routerLink]="['/login']">LOGIN</a>
+        <a mat-button (click)="logout()">LOGOUT</a>
+    </mat-toolbar-row>
+</mat-toolbar>
 
 <table *ngIf="selectedlocation" border="1px">
     <tr>
@@ -51,9 +40,9 @@
         <td>LatLng: </td>
         <td>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</td>
     </tr>
-    <tr *ngFor="let image of selectedlocation.images">
+    <tr *ngIf="selectedlocation.images.length>0">
         <td>Image Url: </td>
-        <td>{{image.url}}</td>
+        <td>{{selectedlocation.images[0].url}}</td>
     </tr>
     <tr>
         <td>Favourite?: </td>
@@ -67,8 +56,8 @@
 </div>
 <br>
 <div *ngIf="selectedlocation?.fav">
-    <button type="button" (click)="removeFav()">Delete</button>
-    <button type="button" (click)="toggleForm()">Comment</button>
+    <button mat-raised-button color="primary" type="button" (click)="removeFav()">Delete</button>
+    <button mat-raised-button color="primary" type="button" (click)="toggleForm()">Comment</button>
     <div [hidden]="hideForm>0">
         <form [formGroup]="commentForm" (ngSubmit)="addComment()">
             <table>
@@ -91,15 +80,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <button type="submit">Comment</button>
+                    <button mat-raised-button color="primary" type="submit">Comment</button>
                 </tr>
             </table>
         </form>
     </div>
 </div>
-<button type="button" [disabled]="selectedlocation.fav" (click)="addFav()">Save to Favourites</button>
-<button type="button" [routerLink]="['/results']">Back to Results</button>
-<button type="button" [routerLink]="['/search']">New Search</button>
+<button mat-raised-button color="primary" type="button" [disabled]="selectedlocation.fav" (click)="addFav()">Save to Favourites</button>
+<button mat-raised-button color="primary" type="button" [routerLink]="['/results']">Back to Results</button>
+<button mat-raised-button color="primary" type="button" [routerLink]="['/search']">New Search</button>
 
 <div *ngIf="selectedlocation.locationComments">
     <div *ngFor="let comment of selectedlocation.locationComments; let idx = index">
@@ -110,7 +99,7 @@
         <img src="https://vttpws.sgp1.digitaloceanspaces.com/todo%2F{{selectedlocation.locationComments[idx].imageUUID}}" alt="" width="100vw">
         <span>Post_id: {{selectedlocation.locationComments[idx].post_id}}</span>
         <div [hidden]="!emailCheck(idx)">
-            <button (click)="deleteComment(selectedlocation.locationComments[idx].post_id)">Delete Comment</button>
+            <button mat-raised-button color="primary" (click)="deleteComment(selectedlocation.locationComments[idx].post_id)">Delete Comment</button>
         </div>
     </div>
 </div>

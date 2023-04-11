@@ -28,4 +28,9 @@ export class ResultsComponent implements OnInit{
     this.dataSvc.selectedLocation = this.dataSvc.searchResults[idx];
     this.router.navigate(['/details']);
   }
+
+  logout(){
+    this.svc.logout();
+    this.router.navigate(['/login']);
+  }
 }

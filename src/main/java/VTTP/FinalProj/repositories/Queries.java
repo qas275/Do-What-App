@@ -7,7 +7,7 @@ public class Queries {
     public static final String ADD_COMMENT = "insert into comments(user_email, location_id, comments, rating, image_url) values(?,?,?,?,?)";
     public static final String GET_COMMENTS_BY_LOCATION_ID = "select * from comments where location_id = ?";
     public static final String DELETE_COMMENT = "delete from comments where post_id=?";
-    public static final String DELETE_USER = "delete from users where email='?'";
-    public static final String DELETE_COMMENTS_BY_USER = "delete from comments where email='?'";
+    public static final String DELETE_USER = "delete from users where email=?";
+    public static final String DELETE_COMMENTS_BY_USER = "delete from comments where user_email=?";
     public static final String CHECK_IMAGES = "select count(image_url)>0 as dup from comments where image_url = ?";
 } 

@@ -31,4 +31,9 @@ export class SearchComponent implements OnInit{
     this.dataSvc.response = await this.svc.search(this.dataSvc.keyword)
     this.router.navigate(['/results'])
   }
+
+  logout(){
+    this.svc.logout();
+    this.router.navigate(['/login']);
+  }
 }

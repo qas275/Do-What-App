@@ -1,48 +1,40 @@
-<p>register works!</p>
-
-<table class="Banner">
-    <tr>LINKS</tr>
-    <tr>
-        <td>
-            <span [routerLink]="['/register']">Register</span>
-        </td>
-        <td>
-            <span [routerLink]="['/search']">search</span>
-        </td>
-        <td>
-            <span [routerLink]="['/results']">results</span>
-        </td>
-        <td>
-            <span [routerLink]="['/details']">details</span>
-        </td>
-        <td>
-            <span [routerLink]="['/comment']">comment</span>
-        </td>
-        <td>
-            <span [routerLink]="['/home']">home</span>
-        </td>
-        <td>
-            <span [routerLink]="['/login']">login</span>
-        </td>
-    </tr>
-</table>
+<mat-toolbar color="primary" class="header">
+    <mat-toolbar-row style="text-align: center;display: inline-block;
+    width: 100%;height: 20%;">
+        <span>ZUOMO APP</span>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block;
+    width: 100%;">
+        <a mat-button [routerLink]="['/register']">REGISTER </a>|
+        <a mat-button [routerLink]="['/search']">SEARCH</a>|
+        <a mat-button [routerLink]="['/results']">RESULTS </a>|
+        <a mat-button [routerLink]="['/details']">DETAILS </a>|
+        <a mat-button [routerLink]="['/home']">HOME </a>|
+        <a mat-button [routerLink]="['/login']">LOGIN</a>
+    </mat-toolbar-row>
+</mat-toolbar>
 
 <form [formGroup]="registrationForm" (ngSubmit)="register()">
     <table> 
         <tr>
-            <td>Email:</td>
-            <td>
-                <input type="text" formControlName="email">
-            </td>
+            <mat-form-field>
+                <mat-label>Email</mat-label>    
+                <input matInput formControlName="email">
+            </mat-form-field>
         </tr>
         <tr>
-            <td>PW:</td>
-            <td>
-                <input type="password" formControlName="password">
-            </td>
+            <mat-form-field>
+                <mat-label>Email</mat-label>    
+                <input matInput type="password" formControlName="password">
+            </mat-form-field>
         </tr>
         <tr>
-            <td><button type="submit" [disabled]="registrationForm.invalid">Register!</button></td>
+            <div *ngIf="registrationForm.invalid else elseblock">
+                <button mat-raised-button color="" type="button">REGISTER</button>
+            </div>
+            <ng-template #elseblock>
+                <button mat-raised-button color="accent" type="submit">REGISTER</button>
+            </ng-template>
         </tr>
     </table>
 </form>

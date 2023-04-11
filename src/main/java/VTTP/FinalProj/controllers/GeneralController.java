@@ -63,7 +63,7 @@ public class GeneralController {
     consumes=MediaType.MULTIPART_FORM_DATA_VALUE, 
     produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> addComment(@RequestPart MultipartFile image,
+    public ResponseEntity<String> addComment(@RequestPart (required = false) MultipartFile image,
     @RequestPart String email,
     @RequestPart String location_id,
     @RequestPart String comment,
@@ -99,6 +99,7 @@ public class GeneralController {
             gSvc.deleteUserAndComments(email);
             job.add("response", "ok").build();
         } catch (Exception e) {
+            System.out.println("failure to delete");
             job.add("response", e.toString()).build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(job.build().toString());

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TIHLocation } from 'src/app/models';
 import { DataService } from 'src/app/service/data.service';
@@ -12,7 +13,7 @@ import { GeneralService } from 'src/app/service/general.service';
 })
 export class DetailsComponent implements OnInit {
 
-  constructor(private activatedRoute:ActivatedRoute,private dataSvc:DataService, private svc:GeneralService, private router:Router, private fb:FormBuilder){
+  constructor(public sanitizer:DomSanitizer, private activatedRoute:ActivatedRoute,private dataSvc:DataService, private svc:GeneralService, private router:Router, private fb:FormBuilder){
     
   }
 
@@ -21,6 +22,7 @@ export class DetailsComponent implements OnInit {
   selectedlocation!:TIHLocation
   commentForm!:FormGroup
   hideForm=1;
+  gmap = ""
   
   ngOnInit(): void {
     this.selectedlocation = this.dataSvc.selectedLocation;
@@ -32,7 +34,10 @@ export class DetailsComponent implements OnInit {
     })
     this.hideForm = 1;
     this.commentForm = this.createForm();
-    this.svc.getComments(this.selectedlocation.uuid).then(v=> {this.selectedlocation.locationComments= v});
+    this.svc.getComments(this.selectedlocation.uuid).then(v=> {this.selectedlocation.locationComments= v; console.log(v)});
+    let name = this.selectedlocation.name.replace(" ","+")
+    this.gmap="https://www.google.com/maps/embed/v1/place?key=&q="+name+"&center="+this.selectedlocation.location.latitude+","+this.selectedlocation.location.longitude;
+    console.log(this.gmap)
     console.log("FAV?", this.selectedlocation.fav);
   }
 
@@ -85,8 +90,8 @@ export class DetailsComponent implements OnInit {
   deleteComment(post_id:string){
     this.svc.deleteComment(post_id).then(v=>{
       alert("removed comment!")
+      this.ngOnInit(); //attempting to reload page instead of redirect to home
     });
-    this.ngOnInit(); //attempting to reload page instead of redirect to home
     // this.router.navigate(['/home'])
   }
 

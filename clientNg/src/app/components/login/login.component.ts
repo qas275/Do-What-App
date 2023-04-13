@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit{
 
   loginForm!: FormGroup;
   email = '';
+  hide=true;
 
   constructor(private svc:GeneralService, private authSvc:AuthService, private dataSvc:DataService, private formbuilder: FormBuilder, private router:Router){
     
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit{
   createLoginForm(){
     return this.formbuilder.group({
       email: this.formbuilder.control(this.email, [Validators.required]),
-      password: this.formbuilder.control('', [Validators.required])
+      password: this.formbuilder.control('', [Validators.required, Validators.minLength(3)])
     })
   }
 

@@ -21,7 +21,22 @@ export class ResultsComponent implements OnInit{
   ngOnInit(): void {
     this.keyword = this.dataSvc.keyword
     this.tihResp = this.dataSvc.response;
-    this.dataSvc.searchResults = this.tihResp?.data;
+    console.log(this.dataSvc.searchResults)
+    // this.dataSvc.searchResults = this.tihResp?.data;
+    // this.dataSvc.searchResults.forEach(v=>{
+    //   let arr = this.dataSvc.svcUser.favorites.filter(e=>{console.log(e);console.log(e.uuid===v.uuid)});
+    //   console.log(arr, "arr")
+      // if(this.dataSvc.svcUser.favorites.filter(e=>{console.log(e);e.uuid===v.uuid}).length>1){
+      //   v.fav=true;
+      //   console.log("fav found", v.name)
+      // }else{
+      //   console.log(this.dataSvc.svcUser.favorites.filter(e=>{e.uuid===v.uuid; console.log(e.name, e.uuid, v.name, v.uuid)}))
+      //   console.log(this.dataSvc.svcUser.favorites.filter(e=>{e.uuid===v.uuid}).length)
+      //   v.fav = false;
+      // }
+    // });
+    
+    // console.log(this.dataSvc.searchResults.forEach(v=>console.log(v.name, v.fav)))
   }
 
   nav(idx:number){

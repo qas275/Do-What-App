@@ -15,48 +15,59 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<table *ngIf="selectedlocation" border="1px">
-    <tr>
-        <td>Location Name: </td>
-        <td>{{selectedlocation.name}}</td>
-    </tr>
-    <tr>
-        <td>Description: </td>
-        <td>{{selectedlocation.description}}</td>
-    </tr>
-    <tr>
-        <td>UUID: </td>
-        <td>{{selectedlocation.uuid}}</td>
-    </tr>
-    <tr>
-        <td>Nearest MRT: </td>
-        <td>{{selectedlocation.nearestMrtStation}}</td>
-    </tr>
-    <tr>
-        <td>Contact: </td>
-        <td>{{selectedlocation.contact.primaryContactNo}}</td>
-    </tr>
-    <tr>
-        <td>LatLng: </td>
-        <td>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</td>
-    </tr>
-    <tr *ngIf="selectedlocation.images.length>0">
-        <td>Image Url: </td>
-        <td>{{selectedlocation.images[0].url}}</td>
-    </tr>
-    <tr>
-        <td>Favourite?: </td>
-        <td>{{selectedlocation.fav.toString()}}</td>
-    </tr>
-</table>
-<h1>test google maps</h1>
-<img src="https://maps.googleapis.com/maps/api/staticmap?center={{selectedlocation.location.latitude.toString()}},{{selectedlocation.location.longitude.toString()}}&zoom=14&size=400x400&key=AIzaSyCBsiF-fnqF2OddWShJ_wCYlB4OTK5NTuo" alt="">
+<div *ngIf="selectedlocation">
+    <mat-card>
+        <mat-card-header>
+            <h1>{{selectedlocation.name}}  </h1> <h1 *ngIf="selectedlocation.fav"> &nbsp; <mat-icon style="color:orange">star</mat-icon></h1>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                <span>Location Name:</span><span>{{selectedlocation.name}}</span>
+            </p>
+            <p>
+                <span>Description:</span><span>{{selectedlocation.description}}</span>
+            </p>
+            <p>
+                <span>UUID:</span><span>{{selectedlocation.uuid}}</span>
+            </p>
+            <p>
+                <span>Nearest:</span><span>{{selectedlocation.nearestMrtStation}}</span>
+            </p>
+            <p>
+                <span>Contact</span><span>{{selectedlocation.contact.primaryContactNo}}</span>
+            </p>
+            <p>
+                <span>GeoCode:</span><span>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</span>
+            </p>
+            <p *ngIf="selectedlocation.images.length>0">
+                    <span>Image Url:</span>
+                    <span>{{selectedlocation.images[0].url}}</span>
+            </p>
+            <p>
+                <span>Fav?:</span><span>{{selectedlocation.fav.toString()}}</span>
+            </p>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<iframe
+      width="650"
+      height="450"
+      frameborder="0" style="border:0"
+      referrerpolicy="no-referrer-when-downgrade"
+      [src]="sanitizer.bypassSecurityTrustResourceUrl(this.gmap)"
+      allowfullscreen>
+</iframe>
+
+
 <div *ngIf="selectedlocation.images.length>0">
     <img src={{selectedlocation.images[0].url}} width="500vw">
 </div>
 <br>
+
+
 <div *ngIf="selectedlocation?.fav">
-    <button mat-raised-button color="primary" type="button" (click)="removeFav()">Delete</button>
+    <button mat-raised-button color="primary" type="button" (click)="removeFav()">Remove from Favourites</button>
     <button mat-raised-button color="primary" type="button" (click)="toggleForm()">Comment</button>
     <div [hidden]="hideForm>0">
         <form [formGroup]="commentForm" (ngSubmit)="addComment()">
@@ -86,7 +97,7 @@
         </form>
     </div>
 </div>
-<button mat-raised-button color="primary" type="button" [disabled]="selectedlocation.fav" (click)="addFav()">Save to Favourites</button>
+<button mat-raised-button color="primary" type="button" [hidden]="selectedlocation.fav" (click)="addFav()">Save to Favourites</button>
 <button mat-raised-button color="primary" type="button" [routerLink]="['/results']">Back to Results</button>
 <button mat-raised-button color="primary" type="button" [routerLink]="['/search']">New Search</button>
 

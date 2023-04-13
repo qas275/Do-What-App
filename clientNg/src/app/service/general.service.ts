@@ -23,10 +23,12 @@ constructor( private http:HttpClient, private dataSvc:DataService) { }
 
   }
 
-  search(keyword:string){
+  async search(keyword:string){
     let params = new HttpParams().set('keyword', keyword);
     console.log("INIT SEARCH " +keyword)
-    return lastValueFrom(this.http.get<TIHResponse>('/search', {params:params,headers:this.setHead()}))
+    await lastValueFrom(this.http.get<TIHResponse>('/search', {params:params,headers:this.setHead()})).then(v=>{
+      this.dataSvc.searchResults = v.data
+    })
   }
 
   async saveFavourite(){

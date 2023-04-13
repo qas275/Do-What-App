@@ -17,6 +17,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { SafePipe } from './pipe/safe.pipe';
 
 const appRoutes: Routes = [
   {path:"login", component:LoginComponent},
@@ -41,7 +42,9 @@ const appRoutes: Routes = [
     CommentComponent,
     HomeComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    SafePipe
+    
   ],
   imports: [
     BrowserModule, 
@@ -51,7 +54,7 @@ const appRoutes: Routes = [
     GoogleMapsModule,RouterModule.forRoot(appRoutes, {useHash:true}), 
     MaterialModule
   ],
-  providers: [],
+  providers: [SafePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

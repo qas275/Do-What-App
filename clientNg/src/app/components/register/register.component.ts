@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit{
   }
 
   registrationForm!: FormGroup
+  hide=true;
 
   ngOnInit(): void {
       this.registrationForm = this.createRegForm();
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit{
   createRegForm(){
     return this.fb.group({
       email:this.fb.control('', [Validators.required, Validators.email]),
-      password: this.fb.control('', Validators.required)
+      password: this.fb.control('', [Validators.required, Validators.minLength(3)])
     })
   }
 

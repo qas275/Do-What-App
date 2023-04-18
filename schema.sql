@@ -26,12 +26,12 @@ create table if not exists comments(
 		foreign key (user_email) references users(email)
 );
 
-select * from users;
+--select * from users;
 
-insert ignore into users(email, password) values ('a2@email.com', 'pw2');
+insert ignore into users(email, password) values ('a1@email.com', 'pw1');
 
-select * from users where BINARY email='A1@email.com';
+--select * from users where BINARY email='A1@email.com';
 
-select * from comments;
+--select * from comments;
 
-select count(image_url)>0 as dup_ from comments where image_url = "a";
+--select count(image_url)>0 as dup_ from comments where image_url = "a";

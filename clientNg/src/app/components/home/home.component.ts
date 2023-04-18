@@ -27,14 +27,19 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     const email = sessionStorage.getItem('email');
-    console.log(email)
-    if(email){
-      this.searchForm = this.createSearchForm();
-      this.email = email;
-      this.dataSvc.svcUser.email = email;
-      this.load(email)
-      this.user = this.dataSvc.svcUser
-      console.log("init home with ",this.dataSvc.svcUser)
+    if(!this.authSvc.jwtCheck()){
+      console.log("no jwt")
+      this.router.navigate(['/login'])
+    }else{
+      console.log(email)
+      if(email){
+        this.searchForm = this.createSearchForm();
+        this.email = email;
+        this.dataSvc.svcUser.email = email;
+        this.load(email)
+        this.user = this.dataSvc.svcUser
+        console.log("init home with ",this.dataSvc.svcUser)
+      }
     }
   }
 

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { GoogleMapsModule } from '@angular/google-maps';
 
@@ -18,6 +18,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { SafePipe } from './pipe/safe.pipe';
+import { InterceptorService } from './service/interceptor.service';
 
 const appRoutes: Routes = [
   {path:"login", component:LoginComponent},
@@ -54,7 +55,15 @@ const appRoutes: Routes = [
     GoogleMapsModule,RouterModule.forRoot(appRoutes, {useHash:true}), 
     MaterialModule
   ],
-  providers: [SafePipe],
+  providers: [SafePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: function(router: Router) {
+        return new InterceptorService(router);
+      },
+      multi: true,
+      deps: [Router]
+   }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

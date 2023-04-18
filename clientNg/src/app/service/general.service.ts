@@ -61,7 +61,7 @@ constructor( private http:HttpClient, private dataSvc:DataService) { }
 
   deleteComment(idx:string){
     return lastValueFrom(
-      this.http.get('/deleteComment/'+idx, {headers:this.setHead()})
+      this.http.delete('/deleteComment/'+idx, {headers:this.setHead()})
       )
     }
     

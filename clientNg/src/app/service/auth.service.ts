@@ -32,4 +32,11 @@ export class AuthService {
     );
     return response;
   }
+
+  jwtCheck(){
+    if(!!sessionStorage.getItem("WS_JWT")){
+      return true
+    }
+    return false
+  }
 }

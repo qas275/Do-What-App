@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
 import { GeneralService } from 'src/app/service/general.service';
 
@@ -10,14 +11,18 @@ import { GeneralService } from 'src/app/service/general.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit{
-  constructor(private svc:GeneralService, private dataSvc: DataService, private fb:FormBuilder, private router: Router){
+  constructor(private authSvc:AuthService ,private svc:GeneralService, private dataSvc: DataService, private fb:FormBuilder, private router: Router){
     
   }
 
   searchForm!:FormGroup
 
   ngOnInit(): void {
+    if(!this.authSvc.jwtCheck()){
+      this.router.navigate(['/login']);
+    }else{
       this.searchForm = this.createSearchForm();
+    }
   }
 
   createSearchForm(){

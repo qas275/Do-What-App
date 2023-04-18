@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TIHLocation } from 'src/app/models';
+import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
 import { GeneralService } from 'src/app/service/general.service';
 
@@ -13,7 +14,7 @@ import { GeneralService } from 'src/app/service/general.service';
 })
 export class DetailsComponent implements OnInit {
 
-  constructor(public sanitizer:DomSanitizer, private activatedRoute:ActivatedRoute,private dataSvc:DataService, private svc:GeneralService, private router:Router, private fb:FormBuilder){
+  constructor(private authSvc: AuthService, public sanitizer:DomSanitizer, private activatedRoute:ActivatedRoute,private dataSvc:DataService, private svc:GeneralService, private router:Router, private fb:FormBuilder){
     
   }
 
@@ -25,20 +26,24 @@ export class DetailsComponent implements OnInit {
   gmap = ""
   
   ngOnInit(): void {
-    this.selectedlocation = this.dataSvc.selectedLocation;
-    this.selectedlocation.fav = false;
-    this.dataSvc.svcUser.favorites.forEach(loc =>{
-      if(loc.uuid === this.selectedlocation.uuid){
-        this.selectedlocation.fav =true;
-      }
-    })
-    this.hideForm = 1;
-    this.commentForm = this.createForm();
-    this.svc.getComments(this.selectedlocation.uuid).then(v=> {this.selectedlocation.locationComments= v; console.log(v)});
-    let name = this.selectedlocation.name.replace(" ","+")
-    this.gmap="https://www.google.com/maps/embed/v1/place?key=&q="+name+"&center="+this.selectedlocation.location.latitude+","+this.selectedlocation.location.longitude;
-    console.log(this.gmap)
-    console.log("FAV?", this.selectedlocation.fav);
+    if(!this.authSvc.jwtCheck()){
+      this.router.navigate(['/login'])
+    }else{
+      this.selectedlocation = this.dataSvc.selectedLocation;
+      this.selectedlocation.fav = false;
+      this.dataSvc.svcUser.favorites.forEach(loc =>{
+        if(loc.uuid === this.selectedlocation.uuid){
+          this.selectedlocation.fav =true;
+        }
+      })
+      this.hideForm = 1;
+      this.commentForm = this.createForm();
+      this.svc.getComments(this.selectedlocation.uuid).then(v=> {this.selectedlocation.locationComments= v; console.log(v)});
+      let name = this.selectedlocation.name.replace(" ","+")
+      this.gmap="https://www.google.com/maps/embed/v1/place?key=AIzaSyCBsiF-fnqF2OddWShJ_wCYlB4OTK5NTuo&q="+name+"&center="+this.selectedlocation.location.latitude+","+this.selectedlocation.location.longitude;
+      console.log(this.gmap)
+      console.log("FAV?", this.selectedlocation.fav);
+    }
   }
 
   addFav(){

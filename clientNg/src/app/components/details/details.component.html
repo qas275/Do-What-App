@@ -73,16 +73,22 @@
         <form [formGroup]="commentForm" (ngSubmit)="addComment()">
             <table>
                 <tr>
-                    <td>Rating</td>
-                    <td>
-                        <input type="number" formControlName="rating" step="1" min="1" max="5" [defaultValue]="1">
-                    </td>
+                    <mat-form-field>
+                        <!-- <input type="number" class="form-control" placeholder="Rating" > -->
+                        <mat-select formControlName="rating" placeholder="Rating">
+                            <mat-option value="1">1</mat-option>
+                            <mat-option value="2">2</mat-option>
+                            <mat-option value="3">3</mat-option>
+                            <mat-option value="4">4</mat-option>
+                            <mat-option value="5">5</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </tr>
                 <tr>
-                    <td>Comment</td>
-                    <td>
-                        <input type="text" formControlName="comment">
-                    </td>
+                    <mat-form-field>
+                        <mat-label>Comment:</mat-label>
+                        <input type="text" matInput formControlName="comment">
+                    </mat-form-field>
                 </tr>
                 <tr>
                     <td>Picture</td>
@@ -91,7 +97,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <button mat-raised-button color="primary" type="submit">Comment</button>
+                    <button mat-raised-button color="primary" type="submit">Upload comment</button>
                 </tr>
             </table>
         </form>

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.mongodb.client.result.UpdateResult;
@@ -160,7 +161,6 @@ public class DatabaseRepository {
         }
         //create a upload request
         PutObjectRequest putReq = new PutObjectRequest("vttpws", "todo/%s".formatted(key), image.getInputStream(),metadata);//bucket name, key of (directory/object key in this case)
-        
         //allow public access to read only
         putReq.withCannedAcl(CannedAccessControlList.PublicRead);
         
@@ -168,6 +168,20 @@ public class DatabaseRepository {
         s3Client.putObject(putReq);
 
         return Optional.of(key);
+    }
+
+    public void deletePictureSpaces(String post_id) throws IOException{
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(GET_IMG_URL, post_id);
+
+        rs.next();
+
+        String imageUUID = rs.getString("uuid");
+
+        //create delete req
+        DeleteObjectRequest delReq = new DeleteObjectRequest("vttpws", "todo/%s".formatted(imageUUID));//bucket name, key of (directory/object key in this case)
+        
+        //use client to send specified request
+        s3Client.deleteObject(delReq);
     }
     
     

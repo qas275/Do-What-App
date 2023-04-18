@@ -10,4 +10,5 @@ public class Queries {
     public static final String DELETE_USER = "delete from users where email=?";
     public static final String DELETE_COMMENTS_BY_USER = "delete from comments where user_email=?";
     public static final String CHECK_IMAGES = "select count(image_url)>0 as dup from comments where image_url = ?";
+    public static final String GET_IMG_URL = "select post_id, image_url as uuid from comments where post_id = ?";
 } 

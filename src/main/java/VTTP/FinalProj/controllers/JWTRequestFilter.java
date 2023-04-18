@@ -27,6 +27,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorisation");
+        System.out.println("HERE");
+        System.out.println(request.getRequestURL().toString());
         System.out.println(authHeader);
         final String jwt;
         final String userEmail;

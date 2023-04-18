@@ -68,8 +68,13 @@ public class GeneralService {
         }
         return jab.build();
     }
-
+    
     public int deleteComment(String post_id){
+        try {
+            dbRepo.deletePictureSpaces(post_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return dbRepo.deleteComment(post_id);
     }
 

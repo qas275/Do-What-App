@@ -1,9 +1,17 @@
 TODOS:
 1) implement delete user for transactional requirement, delete user and all related comments together [SOLVED]
-2) delete comment function, need to delete picture from s3
+2) delete comment function, need to delete picture from s3 [SOLVED]
 3) remove and clear form after adding comment [SOLVED]
 4) new s3 added but retrieval of image from s3 not working [SOLVED]
-5) 
+5) move profile and logout button to side nav bar
+6) if not logged in, either implement users can use app without login but cannot save and comment, or redirect to login [SOLVED]
+7) align google maps and location image
+8) find image not only with url but uuid as well
+9) github actions [CANCELLED] #will not continue unless able to implement with docker
+10) dockerfile
+11) results view cards shrinking, hover
+12) comment form material, buttons alignment
+
 
 
 SAMPLE API OUTPUT

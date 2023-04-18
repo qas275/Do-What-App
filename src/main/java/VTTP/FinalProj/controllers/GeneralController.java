@@ -34,19 +34,21 @@ public class GeneralController {
     GeneralService gSvc;
     
     
-
+    
     @GetMapping(path = "/load")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> load(@RequestParam String email){
         String res = gSvc.loadFav(email);
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
-
+    
     @GetMapping(path = "/search")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> searchRestaurant(@RequestParam String keyword){
         String responseBody = gSvc.search(keyword);
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+        return ResponseEntity.status(HttpStatus.OK).header("Access-Control-Allow-Origin", "*").body(responseBody);
     }
 
     @PostMapping(path = "/updateFav")

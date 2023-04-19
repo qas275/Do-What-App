@@ -3,8 +3,10 @@ package VTTP.FinalProj.controllers;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,6 +37,7 @@ public class AuthenticationController {
     public ResponseEntity<String> authenticateReq(@RequestBody JWTRequest authenticationRequest) throws Exception {
         // JWTResponse resp = new JWTResponse();
         JsonObjectBuilder job = Json.createObjectBuilder();
+        
         try {
             System.out.println(authenticationRequest.getEmail());
             System.out.println(authenticationRequest.getPassword());
@@ -50,6 +53,8 @@ public class AuthenticationController {
         catch (UsernameNotFoundException e) {
             job.add("login", "false");
         }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "https://test-client-pi.vercel.app/#/");
         return ResponseEntity.status(HttpStatus.OK).body(job.build().toString());
     }
 

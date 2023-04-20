@@ -24,7 +24,7 @@ import jakarta.json.JsonObjectBuilder;
 
 @RestController
 @RequestMapping(path = "/auth")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class AuthenticationController {
     
     @Autowired
@@ -35,15 +35,12 @@ public class AuthenticationController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<String> authenticateReq(@RequestBody JWTRequest authenticationRequest) throws Exception {
-        // JWTResponse resp = new JWTResponse();
         JsonObjectBuilder job = Json.createObjectBuilder();
         
         try {
-            System.out.println(authenticationRequest.getEmail());
-            System.out.println(authenticationRequest.getPassword());
-            Optional<JWTResponse> resp = jwtAuthService.authenticate(authenticationRequest); // continue debug here
+            System.out.println("CONTROLLER LOGIN WITH:"+ authenticationRequest.getEmail()+authenticationRequest.getPassword() );
+            Optional<JWTResponse> resp = jwtAuthService.authenticate(authenticationRequest); 
             if(!resp.isEmpty()){
-                System.out.println("HEHEHEHE");
                 job.add("login", "true");
                 job.add("jwt", resp.get().getJwt());
             }else{
@@ -53,8 +50,6 @@ public class AuthenticationController {
         catch (UsernameNotFoundException e) {
             job.add("login", "false");
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Origin", "https://test-client-pi.vercel.app/#/");
         return ResponseEntity.status(HttpStatus.OK).body(job.build().toString());
     }
 
@@ -64,11 +59,10 @@ public class AuthenticationController {
         String password = body.getFirst("password");
         JsonObjectBuilder job = Json.createObjectBuilder();
         if(jwtAuthService.register(email, password)){
-
             job.add("registration", "true");
             String subject = "Account Created - %s".formatted(email);
             String emailBody = "Welcome to ZUOMO APP. \n\n Email: %s \n Password: %s ".formatted(email, password);
-            mailService.sendEmail(email, subject, emailBody);
+            mailService.sendEmail(email, subject, emailBody); //DOUBLE CHECK ON THIS, SEEMS TO BE WEIRD?
         }else{
             job.add("registration", "false");
         }

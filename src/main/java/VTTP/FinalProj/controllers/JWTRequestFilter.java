@@ -27,19 +27,17 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorisation");
-        System.out.println("HERE");
-        System.out.println(request.getRequestURL().toString());
+        System.out.println("FILTERING, RETRIEVED TOKEN: "+authHeader);
         System.out.println(authHeader);
         final String jwt;
         final String userEmail;
-        if(authHeader == null || authHeader.startsWith("Bearer ")){
+        if(authHeader == null || authHeader.startsWith("Bearer ")){ //added space after bearer unlike online sources to filter " " JWTs
             filterChain.doFilter(request, response);
             return;
         }
         jwt = authHeader.substring(6);
-        System.out.println(jwt);
+        System.out.println("JWT EXTRACTED: "+jwt);
         userEmail = jwtUtil.extractUsername(jwt);
-        System.out.println(userEmail);
         if(userEmail!=null && SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userdetails = this.userDetailsService.loadUserByUsername(userEmail);
             if(jwtUtil.isTokenValid(jwt, userdetails)){

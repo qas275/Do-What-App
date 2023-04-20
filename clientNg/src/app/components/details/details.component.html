@@ -15,6 +15,11 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
+<p *ngIf="selectedlocation.images.length>0">
+    <span>Image Url:</span>
+    <span>{{selectedlocation.images[0].url}}</span>
+</p>
+
 <div *ngIf="selectedlocation">
     <mat-card>
         <mat-card-header>
@@ -39,10 +44,7 @@
             <p>
                 <span>GeoCode:</span><span>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</span>
             </p>
-            <p *ngIf="selectedlocation.images.length>0">
-                    <span>Image Url:</span>
-                    <span>{{selectedlocation.images[0].url}}</span>
-            </p>
+            
             <p>
                 <span>Fav?:</span><span>{{selectedlocation.fav.toString()}}</span>
             </p>

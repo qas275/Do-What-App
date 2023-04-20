@@ -8,9 +8,10 @@ TODOS:
 7) align google maps and location image
 8) find image not only with url but uuid as well
 9) github actions [CANCELLED] #will not continue unless able to implement with docker
-10) dockerfile
+10) dockerfile [SOLVED]
 11) results view cards shrinking, hover
 12) comment form material, buttons alignment
+13) check send email results, seems to be sending weird emails out
 
 
 

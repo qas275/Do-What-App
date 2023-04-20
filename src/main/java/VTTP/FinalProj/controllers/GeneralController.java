@@ -33,8 +33,6 @@ public class GeneralController {
     @Autowired
     GeneralService gSvc;
     
-    
-    
     @GetMapping(path = "/load")
     @ResponseBody
     public ResponseEntity<String> load(@RequestParam String email){
@@ -46,14 +44,15 @@ public class GeneralController {
     @ResponseBody
     public ResponseEntity<String> searchRestaurant(@RequestParam String keyword){
         String responseBody = gSvc.search(keyword);
-        return ResponseEntity.status(HttpStatus.OK).header("Access-Control-Allow-Origin", "*").body(responseBody);
+        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+        // return ResponseEntity.status(HttpStatus.OK).header("Access-Control-Allow-Origin", "*").body(responseBody);
     }
 
     @PostMapping(path = "/updateFav")
     @ResponseBody
     public ResponseEntity<String> addFavouritePlace(@RequestBody String userJSONString){
         JsonObject userJSON = Json.createReader(new StringReader(userJSONString)).readObject();
-        System.out.println(userJSON.toString());
+        System.out.println("JSON DETAILS OF USER TO BE UPDATED: "+userJSON.toString());
         //TODO saving
         User user = User.createUser(userJSON);
         int res = gSvc.updateFav(user);
@@ -101,7 +100,7 @@ public class GeneralController {
             gSvc.deleteUserAndComments(email);
             job.add("response", "ok").build();
         } catch (Exception e) {
-            System.out.println("failure to delete");
+            System.out.println("FAILED TO DELETE USER");
             job.add("response", e.toString()).build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(job.build().toString());

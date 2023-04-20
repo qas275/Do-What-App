@@ -25,7 +25,7 @@ public class JWTAuthService {
     private final PasswordEncoder passwordEncoder;
 
     public Optional<JWTResponse> authenticate(JWTRequest request){
-        System.out.println("WITHIN SERVICE "+request.getPassword());
+        System.out.println("JWT AUTH SERVICE CHECKING PASSWORD: "+request.getPassword());
         try {
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
@@ -34,7 +34,7 @@ public class JWTAuthService {
             // TODO: handle exception
             return Optional.empty();
         }
-        System.out.println("AFTER AUTH");
+        System.out.println("LOGIN AUTHENTICATED CREATING JWT TOKEN");
         Optional<User> optUser = dbRepo.loadUser(request.getEmail());
         System.out.println(optUser.get().getEmail());
         String JWT = jwtUtil.generateToken(optUser.get());

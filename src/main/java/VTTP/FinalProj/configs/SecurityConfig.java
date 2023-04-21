@@ -32,7 +32,7 @@ public class SecurityConfig{
         //     .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity.cors().and().csrf().disable()
-            .authorizeHttpRequests().requestMatchers("/auth/**", "/", "/3rdpartylicenses.txt", "/", "/favicon.ico", "/index.html", "/main.ea62c963b825f252.js", "/polyfills.d81bfc265aeaed00.js", "/runtime.924b27b870857f62.js", "/styles.c0cf53b324e9d2ff.css", "/assets/**", "/Dreamcatcher.11b799e9474b39a0.png")
+            .authorizeHttpRequests().requestMatchers("/auth/**", "/", "/3rdpartylicenses.txt", "/", "/favicon.ico", "/index.html", "/main.827ba58962a0432d.js", "/manifest.webmanifest", "/polyfills.d81bfc265aeaed00.js", "/runtime.924b27b870857f62.js", "/styles.999bc18a00f2fb4c.css", "/assets/**", "/images/**","/icon-192x192.png","/icon-256x256.png","/icon-384x384.png","/icon-512x512.png", "/Dreamcatcher.11b799e9474b39a0.png")
             .permitAll().anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().authenticationProvider(authProvider)

@@ -29,6 +29,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorisation");
         System.out.println("FILTERING, RETRIEVED TOKEN: "+authHeader);
         System.out.println(authHeader);
+        System.out.println(request.getRequestURL());
+        System.out.println("hello");
         final String jwt;
         final String userEmail;
         if(authHeader == null || authHeader.startsWith("Bearer ")){ //added space after bearer unlike online sources to filter " " JWTs

@@ -16,10 +16,10 @@ export class AppComponent {
   constructor(private router:Router){
     
   }
-  
-  navProfile(){
-    this.router.navigate(['/profile'])
-  }
+  //testing purposes
+  // navProfile(){
+  //   this.router.navigate(['/profile'])
+  // }
 
   
 }

@@ -5,29 +5,51 @@
     </mat-toolbar-row>
     <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block;
     width: 100%;">
+        <a mat-button [routerLink]="['/home']">HOME </a>|
         <a mat-button [routerLink]="['/register']">REGISTER </a>|
-        <a mat-button [routerLink]="['/search']">SEARCH</a>|
         <a mat-button [routerLink]="['/results']">RESULTS </a>|
         <a mat-button [routerLink]="['/details']">DETAILS </a>|
-        <a mat-button [routerLink]="['/home']">HOME </a>|
         <a mat-button [routerLink]="['/login']">LOGIN</a>
-        <a mat-button (click)="logout()">LOGOUT</a>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/profile']">
+                <span>My Profile</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <span>Logout</span>
+            </button>
+        </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>
-<br>
-<h2 style="color:white">Favorites</h2>
-<div *ngIf="user.numFavs>0">
-    <div *ngFor="let location of user.favorites; let idx = index">
 
-        <mat-card (click)="nav(idx)">
+<br>
+<div style="margin: auto;width: 50%;padding: 10px;">
+    <form [formGroup]="searchForm" (ngSubmit)="search()" style="margin: auto; width: 70%; padding: 10px;">
+        <mat-form-field>
+            <mat-label>Keyword:</mat-label>
+            <input type="text" matInput formContdolName="keyword">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">SEARCH</button>
+    </form>
+</div>
+<br>
+
+
+<h2 style="color:orangered">Favorites</h2>
+<div *ngIf="user.numFavs>0" style="padding-left: 5vw; padding-right: 5vw;">
+    <div *ngFor="let location of user.favorites; let idx = index" >
+
+        <mat-card (click)="nav(idx)" class="cardM">
             <mat-card-title>{{location.name}}</mat-card-title>
             <mat-card-content>
                 <p>
-                    <span>Nearest MRT: </span>
+                    <b>Nearest MRT: </b>
                     <span>{{location.nearestMrtStation}}</span>
                 </p>
                 <p>
-                    <span>Type: </span>
+                    <b>Type: </b>
                     <span>{{location.dataset.replace("_"," ") | titlecase}}</span>
                 </p>
             </mat-card-content>
@@ -56,18 +78,6 @@
     </div>
 </div>
 
-<form [formGroup]="searchForm" (ngSubmit)="search()">
-    <table>
-        <tr>
-            <mat-form-field>
-                <mat-label>Keyword:</mat-label>
-                <input type="text" matInput formControlName="keyword">
-            </mat-form-field>
-        <tr>
-            <td><button mat-raised-button color="primary" type="submit">SEARCH</button></td>
-        </tr>
-    </table>
-</form>
 
 <!-- <button mat-raised-button color="primary" [routerLink]="['/search']">SEARCH</button> -->
 

@@ -22,6 +22,10 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     console.log("LOGIN LOADING")
+    if(sessionStorage.getItem("WS_JWT")&& sessionStorage.getItem("email")){
+      this.dataSvc.svcUser.email = this.email;
+      this.router.navigate(['/home'])
+    }
     this.loginForm = this.createLoginForm();  
     console.log(sessionStorage.getItem("WS_JWT"))
   }

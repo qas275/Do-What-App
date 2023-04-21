@@ -6,7 +6,6 @@
     <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block;
     width: 100%;">
         <a mat-button [routerLink]="['/register']">REGISTER </a>|
-        <a mat-button [routerLink]="['/search']">SEARCH</a>|
         <a mat-button [routerLink]="['/results']">RESULTS </a>|
         <a mat-button [routerLink]="['/details']">DETAILS </a>|
         <a mat-button [routerLink]="['/home']">HOME </a>|
@@ -15,68 +14,78 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<p *ngIf="selectedlocation.images.length>0">
-    <span>Image Url:</span>
-    <span>{{selectedlocation.images[0].url}}</span>
-</p>
+
+<br>
+<div *ngIf="selectedlocation.images.length>0" style="text-align: center;">
+    <img src={{selectedlocation.images[0].url}} width="400vw">
+    <p>{{selectedlocation.images[0].url}}</p>
+</div>
+
+
 
 <div *ngIf="selectedlocation">
+    <div style="display: flex;
+    justify-content: center;">
+        <h1>{{selectedlocation.name}}<span *ngIf="selectedlocation.fav"> &nbsp; <mat-icon style="color:orange">star</mat-icon></span></h1> 
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <mat-card class="cardM">
+            <mat-card-content>
+                <p>
+                    <b>Description:</b><span>{{selectedlocation.description}}</span>
+                </p>
+                <p>
+                    <b>Type:</b><span>{{selectedlocation.dataset.replace("_", " and ") | titlecase}}</span>
+                </p>
+                <p>
+                </p>
+                <p>
+                    <b>Contact</b><span>{{selectedlocation.contact.primaryContactNo}}</span>
+                </p>
+                <p *ngIf="selectedlocation.images.length>0">
+                    <span>Image Url:</span>
+                </p>            
+                <p>
+                    <span>Fav?:</span><span>{{selectedlocation.fav.toString()}}</span>
+                </p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div style="display: flex; justify-content: center;">
+            <div class="flex-child" style="align-items: end;">
+                <mat-card style="height: 20vh; width: 10vw;" class="cardmap">
+                        <b>Address:</b><span>{{selectedlocation.address.block}} {{selectedlocation.address.streetName}}, #{{selectedlocation.address.floorNumber}}-{{selectedlocation.address.unitNumber}}, {{selectedlocation.address.postalCode}}</span>
+                        <b>Nearest:</b><span>{{selectedlocation.nearestMrtStation}}</span>
+                        <span>GeoCode:</span><span>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</span>
+                </mat-card>
+            </div>
+            <div class="flex-child">
+                    <iframe
+                        height="300vh"
+                        frameborder="0" style="border:0"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        [src]="sanitizer.bypassSecurityTrustResourceUrl(this.gmap)"
+                        >
+                    </iframe>
+            </div>
+    </div>
+    
     <mat-card>
-        <mat-card-header>
-            <h1>{{selectedlocation.name}}  </h1> <h1 *ngIf="selectedlocation.fav"> &nbsp; <mat-icon style="color:orange">star</mat-icon></h1>
-        </mat-card-header>
-        <mat-card-content>
-            <p>
-                <span>Location Name:</span><span>{{selectedlocation.name}}</span>
-            </p>
-            <p>
-                <span>Description:</span><span>{{selectedlocation.description}}</span>
-            </p>
-            <p>
-                <span>UUID:</span><span>{{selectedlocation.uuid}}</span>
-            </p>
-            <p>
-                <span>Nearest:</span><span>{{selectedlocation.nearestMrtStation}}</span>
-            </p>
-            <p>
-                <span>Contact</span><span>{{selectedlocation.contact.primaryContactNo}}</span>
-            </p>
-            <p>
-                <span>GeoCode:</span><span>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</span>
-            </p>
-            
-            <p>
-                <span>Fav?:</span><span>{{selectedlocation.fav.toString()}}</span>
-            </p>
-        </mat-card-content>
     </mat-card>
 </div>
 
-<iframe
-      width="650"
-      height="450"
-      frameborder="0" style="border:0"
-      referrerpolicy="no-referrer-when-downgrade"
-      [src]="sanitizer.bypassSecurityTrustResourceUrl(this.gmap)"
-      allowfullscreen>
-</iframe>
 
-
-<div *ngIf="selectedlocation.images.length>0">
-    <img src={{selectedlocation.images[0].url}} width="500vw">
-</div>
 <br>
 
 
 <div *ngIf="selectedlocation?.fav">
     <button mat-raised-button color="primary" type="button" (click)="removeFav()">Remove from Favourites</button>
-    <button mat-raised-button color="primary" type="button" (click)="toggleForm()">Comment</button>
+    <button mat-raised-button color="primary" type="button" (click)="toggleForm()">Add Comment</button>
     <div [hidden]="hideForm>0">
         <form [formGroup]="commentForm" (ngSubmit)="addComment()">
             <table>
                 <tr>
                     <mat-form-field>
-                        <!-- <input type="number" class="form-control" placeholder="Rating" > -->
                         <mat-select formControlName="rating" placeholder="Rating">
                             <mat-option value="1">1</mat-option>
                             <mat-option value="2">2</mat-option>
@@ -93,8 +102,8 @@
                     </mat-form-field>
                 </tr>
                 <tr>
-                    <td>Picture</td>
                     <td>
+                        <span>UPLOAD PIC: </span>
                         <input type="file" accept="image/*" formControlName="picture" #picture>
                     </td>
                 </tr>
@@ -106,8 +115,7 @@
     </div>
 </div>
 <button mat-raised-button color="primary" type="button" [hidden]="selectedlocation.fav" (click)="addFav()">Save to Favourites</button>
-<button mat-raised-button color="primary" type="button" [routerLink]="['/results']">Back to Results</button>
-<button mat-raised-button color="primary" type="button" [routerLink]="['/search']">New Search</button>
+<button mat-raised-button color="primary" type="button" [routerLink]="['/home']">HOME</button>
 
 <div *ngIf="selectedlocation.locationComments">
     <div *ngFor="let comment of selectedlocation.locationComments; let idx = index">

@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit{
 
   async search(){
     this.dataSvc.keyword = this.searchForm.controls['keyword'].value
+    console.log("line 65 "+this.searchForm.controls['keyword'].value)
     await this.svc.search(this.dataSvc.keyword)
     this.router.navigate(['/results'])
   }

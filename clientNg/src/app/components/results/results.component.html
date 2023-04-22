@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="header">
+<mat-toolbar color="accent" class="header">
     <mat-toolbar-row style="text-align: center;display: inline-block;
     width: 100%;height: 20%;">
         <span>ZUOMO APP</span>
@@ -14,28 +14,23 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<h2 style="color: white;">Showing Results for: {{keyword|uppercase}}</h2>
+<h2 style="color:orangered; padding-left: 5vw; padding-right: 5vw;">Showing Results for: {{keyword|uppercase}}</h2>
 
-<div *ngIf="this.dataSvc.searchResults.length>0; else elseblock">
+<div style="padding-left: 5vw; padding-right: 5vw;" *ngIf="this.dataSvc.searchResults.length>0; else elseblock">
     <div *ngFor="let location of dataSvc.searchResults; let i = index">
-        <mat-card (click)="nav(i)">
-            <mat-card-title>{{location.name}}  </mat-card-title>
+        <mat-card (click)="nav(i)" class="cardM">
+            <mat-card-title style="padding-left: 1vw; padding-top: 1vw;">{{location.name}}  </mat-card-title>
             <mat-card-content>
-                <span>fav?</span><span>{{location.fav}}</span>
                 <p>
-                    <span>Nearest MRT: </span>
+                    <b>Nearest MRT: </b>
                     <span>{{location.nearestMrtStation}}</span>
                 </p>
                 <p>
-                    <span>Type: </span>
+                    <b>Type: </b>
                     <span>{{location.dataset.replace("_"," ") | titlecase}}</span>
                 </p>
                 <p>
-                    <span>UUID: </span>
-                    <span>{{location.uuid}}</span>
-                </p>
-                <p>
-                    <span>Description: </span>
+                    <b>Description: </b>
                     <span>{{location.description}}</span>
                 </p>
             </mat-card-content>
@@ -53,8 +48,8 @@
     </div>
 </div>
 <ng-template #elseblock>
-    <div>
+    <div style="margin: auto;width: 50%;padding: 10px;">
         <p>No Results Found</p>
-        <button [routerLink]="['/search']">Back</button>
+        <button mat-raised-button type="button" color="primary"[routerLink]="['/search']">Back</button>
     </div>
 </ng-template>

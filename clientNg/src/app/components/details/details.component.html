@@ -1,19 +1,28 @@
-<mat-toolbar color="primary" class="header">
+<mat-toolbar color="accent" class="header">
     <mat-toolbar-row style="text-align: center;display: inline-block;
     width: 100%;height: 20%;">
         <span>ZUOMO APP</span>
     </mat-toolbar-row>
     <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block;
     width: 100%;">
+        <a mat-button [routerLink]="['/home']">HOME </a>|
         <a mat-button [routerLink]="['/register']">REGISTER </a>|
         <a mat-button [routerLink]="['/results']">RESULTS </a>|
         <a mat-button [routerLink]="['/details']">DETAILS </a>|
-        <a mat-button [routerLink]="['/home']">HOME </a>|
         <a mat-button [routerLink]="['/login']">LOGIN</a>
-        <a mat-button (click)="logout()">LOGOUT</a>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/profile']">
+                <span>My Profile</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <span>Logout</span>
+            </button>
+        </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>
-
 
 <br>
 <div *ngIf="selectedlocation.images.length>0" style="text-align: center;">
@@ -45,7 +54,7 @@
     </div>
     <div class="parent">
             <div class="child" >
-                <mat-card style="height: 30vh;">
+                <mat-card style="height: 30vh; ">
                         <b>Address:</b><span>{{selectedlocation.address.block}} {{selectedlocation.address.streetName}}, #{{selectedlocation.address.floorNumber}}-{{selectedlocation.address.unitNumber}}, {{selectedlocation.address.postalCode}}</span>
                         <b>Nearest:</b><span>{{selectedlocation.nearestMrtStation}}</span>
                         <span>GeoCode:</span><span>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</span>
@@ -116,14 +125,12 @@
 
 
 
-<div *ngIf="selectedlocation.locationComments">
+<div *ngIf="selectedlocation.locationComments" style="margin: auto;width: 50%;padding-left: 25vw;">
     <div *ngFor="let comment of selectedlocation.locationComments; let idx = index">
-        <h3>User: {{selectedlocation.locationComments[idx].email}}</h3>
-        <span>Comment: {{selectedlocation.locationComments[idx].comment}}</span><br>
-        <span>Rating: {{selectedlocation.locationComments[idx].rating}}</span><br>
-        <span>Image: {{selectedlocation.locationComments[idx].imageUUID}}</span><br>
+        <h3>User: <span>{{selectedlocation.locationComments[idx].email}}</span></h3>
+        <b>Comment: </b> <span>{{selectedlocation.locationComments[idx].comment}}</span><br>
+        <b>Rating: </b> <span>{{selectedlocation.locationComments[idx].rating}}</span><br>
         <img src="https://vttpws.sgp1.digitaloceanspaces.com/todo%2F{{selectedlocation.locationComments[idx].imageUUID}}" alt="" width="100vw">
-        <span>Post_id: {{selectedlocation.locationComments[idx].post_id}}</span>
         <div [hidden]="!emailCheck(idx)">
             <button mat-raised-button color="primary" (click)="deleteComment(selectedlocation.locationComments[idx].post_id)">Delete Comment</button>
         </div>

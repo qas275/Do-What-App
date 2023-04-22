@@ -1,0 +1,22 @@
+::ng-deep .mdc-text-field {
+    background-color: #ccd5ae !important;
+}
+
+::ng-deep .mat-toolbar.mat-accent{
+    background:#E9EDC9;
+    font-weight: bold;
+}
+
+::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input{
+    color: black;
+}
+
+::ng-deep .mat-button{
+    color: #d4a373;
+}
+
+::ng-deep .mat-mdc-raised-button.mat-primary {
+    --mdc-protected-button-container-color: #d4a373;
+    --mdc-protected-button-label-text-color: #black;
+    font-weight: bold;
+}

@@ -100,7 +100,9 @@ public class DatabaseRepository {
     }
 
     public boolean checkRedis(String keyword){
-        return redisTemplate.hasKey(keyword);
+        System.out.println(keyword);
+        boolean res= redisTemplate.hasKey(keyword);
+        return res;
     }
 
     public String loadRedis(String keyword){

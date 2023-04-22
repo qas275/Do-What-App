@@ -43,6 +43,7 @@ public class GeneralController {
     @GetMapping(path = "/search")
     @ResponseBody
     public ResponseEntity<String> searchRestaurant(@RequestParam String keyword){
+        System.out.println(keyword);
         String responseBody = gSvc.search(keyword);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
         // return ResponseEntity.status(HttpStatus.OK).header("Access-Control-Allow-Origin", "*").body(responseBody);

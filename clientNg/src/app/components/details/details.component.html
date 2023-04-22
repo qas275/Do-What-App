@@ -18,18 +18,16 @@
 <br>
 <div *ngIf="selectedlocation.images.length>0" style="text-align: center;">
     <img src={{selectedlocation.images[0].url}} width="400vw">
-    <p>{{selectedlocation.images[0].url}}</p>
 </div>
 
 
 
 <div *ngIf="selectedlocation">
-    <div style="display: flex;
-    justify-content: center;">
+    <div style="display: flex; justify-content: center;">
         <h1>{{selectedlocation.name}}<span *ngIf="selectedlocation.fav"> &nbsp; <mat-icon style="color:orange">star</mat-icon></span></h1> 
     </div>
     <div style="display: flex; justify-content: center;">
-        <mat-card class="cardM">
+        <mat-card class="cardM" style="padding-bottom: 1vw;">
             <mat-card-content>
                 <p>
                     <b>Description:</b><span>{{selectedlocation.description}}</span>
@@ -42,24 +40,18 @@
                 <p>
                     <b>Contact</b><span>{{selectedlocation.contact.primaryContactNo}}</span>
                 </p>
-                <p *ngIf="selectedlocation.images.length>0">
-                    <span>Image Url:</span>
-                </p>            
-                <p>
-                    <span>Fav?:</span><span>{{selectedlocation.fav.toString()}}</span>
-                </p>
             </mat-card-content>
         </mat-card>
     </div>
-    <div style="display: flex; justify-content: center;">
-            <div class="flex-child" style="align-items: end;">
-                <mat-card style="height: 20vh; width: 10vw;" class="cardmap">
+    <div class="parent">
+            <div class="child" >
+                <mat-card style="height: 30vh;">
                         <b>Address:</b><span>{{selectedlocation.address.block}} {{selectedlocation.address.streetName}}, #{{selectedlocation.address.floorNumber}}-{{selectedlocation.address.unitNumber}}, {{selectedlocation.address.postalCode}}</span>
                         <b>Nearest:</b><span>{{selectedlocation.nearestMrtStation}}</span>
                         <span>GeoCode:</span><span>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</span>
                 </mat-card>
             </div>
-            <div class="flex-child">
+            <div class="child">
                     <iframe
                         height="300vh"
                         frameborder="0" style="border:0"
@@ -78,10 +70,12 @@
 <br>
 
 
-<div *ngIf="selectedlocation?.fav">
+<div *ngIf="selectedlocation?.fav" style="display: flex; justify-content: center;">
     <button mat-raised-button color="primary" type="button" (click)="removeFav()">Remove from Favourites</button>
     <button mat-raised-button color="primary" type="button" (click)="toggleForm()">Add Comment</button>
-    <div [hidden]="hideForm>0">
+</div>
+<div [hidden]="hideForm>0" >
+    <div style="display: flex; justify-content: center;">
         <form [formGroup]="commentForm" (ngSubmit)="addComment()">
             <table>
                 <tr>
@@ -103,19 +97,24 @@
                 </tr>
                 <tr>
                     <td>
-                        <span>UPLOAD PIC: </span>
+                        <span>Upload Pic: </span>
                         <input type="file" accept="image/*" formControlName="picture" #picture>
                     </td>
                 </tr>
                 <tr>
-                    <button mat-raised-button color="primary" type="submit">Upload comment</button>
+                    <button mat-raised-button color="primary" type="submit">Post Comment</button>
                 </tr>
             </table>
         </form>
     </div>
+
 </div>
-<button mat-raised-button color="primary" type="button" [hidden]="selectedlocation.fav" (click)="addFav()">Save to Favourites</button>
-<button mat-raised-button color="primary" type="button" [routerLink]="['/home']">HOME</button>
+
+<div style="display: flex; justify-content: center;">
+    <button mat-raised-button color="primary" type="button" [hidden]="selectedlocation.fav" (click)="addFav()">Save to Favourites</button>
+</div>
+
+
 
 <div *ngIf="selectedlocation.locationComments">
     <div *ngFor="let comment of selectedlocation.locationComments; let idx = index">

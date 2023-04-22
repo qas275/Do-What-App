@@ -37,12 +37,12 @@
 <br>
 
 
-<h2 style="color:orangered">Favorites</h2>
+<h2 style="color:orangered; padding-left: 5vw; padding-right: 5vw;">Favorites</h2>
 <div *ngIf="user.numFavs>0" style="padding-left: 5vw; padding-right: 5vw;">
     <div *ngFor="let location of user.favorites; let idx = index" >
 
         <mat-card (click)="nav(idx)" class="cardM">
-            <mat-card-title>{{location.name}}</mat-card-title>
+            <mat-card-title style="padding-left: 1vw; padding-top: 1vw;">{{location.name | uppercase}}</mat-card-title>
             <mat-card-content>
                 <p>
                     <b>Nearest MRT: </b>

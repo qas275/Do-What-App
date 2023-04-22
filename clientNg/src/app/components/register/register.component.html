@@ -5,14 +5,11 @@
     </mat-toolbar-row>
     <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block;
     width: 100%;">
-        <a mat-button [routerLink]="['/register']">REGISTER </a>|
-        <a mat-button [routerLink]="['/results']">RESULTS </a>|
-        <a mat-button [routerLink]="['/details']">DETAILS </a>|
-        <a mat-button [routerLink]="['/home']">HOME </a>|
-        <a mat-button [routerLink]="['/login']">LOGIN</a>
+        <span>来看看能ZUOMO</span>
     </mat-toolbar-row>
 </mat-toolbar>
-
+<br>
+<div style="display: flex; justify-content: center;">
 <form [formGroup]="registrationForm" (ngSubmit)="register()">
     <table> 
         <tr>
@@ -37,6 +34,9 @@
             <ng-template #elseblock>
                 <button mat-raised-button color="accent" type="submit">REGISTER</button>
             </ng-template>
+            <br>
+            <button mat-raised-button color="accent" [routerLink]="['/login']">LOGIN</button>
         </tr>
     </table>
 </form>
+</div>

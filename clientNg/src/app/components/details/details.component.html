@@ -1,15 +1,14 @@
 <mat-toolbar color="accent" class="header">
-    <mat-toolbar-row style="text-align: center;display: inline-block;
-    width: 100%;height: 20%;">
+    <mat-toolbar-row style="text-align: center;display: inline-block; width: 100%;height: 20%;">
         <span>ZUOMO APP</span>
     </mat-toolbar-row>
-    <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block;
-    width: 100%;">
-        <a mat-button [routerLink]="['/home']">HOME </a>|
-        <a mat-button [routerLink]="['/register']">REGISTER </a>|
-        <a mat-button [routerLink]="['/results']">RESULTS </a>|
-        <a mat-button [routerLink]="['/details']">DETAILS </a>|
-        <a mat-button [routerLink]="['/login']">LOGIN</a>
+    <mat-toolbar-row class="Banner" style="text-align: center;display: inline-block; width: 100%;">
+        <button style="font-size: small;" mat-button [routerLink]="['/home']">
+            <span>HOME</span>
+            <mat-icon>home</mat-icon> 
+        </button>|
+        <button mat-button [routerLink]="['/results']">
+            RESULTS <mat-icon>search</mat-icon></button>|
         <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>person</mat-icon>
         </button>
@@ -30,7 +29,6 @@
 </div>
 
 
-
 <div *ngIf="selectedlocation">
     <div style="display: flex; justify-content: center;">
         <h1>{{selectedlocation.name}}<span *ngIf="selectedlocation.fav"> &nbsp; <mat-icon style="color:orange">star</mat-icon></span></h1> 
@@ -39,25 +37,26 @@
         <mat-card class="cardM" style="padding-bottom: 1vw;">
             <mat-card-content>
                 <p>
-                    <b>Description:</b><span>{{selectedlocation.description}}</span>
+                    <b>Description: </b><span>{{selectedlocation.description}}</span>
                 </p>
                 <p>
-                    <b>Type:</b><span>{{selectedlocation.dataset.replace("_", " and ") | titlecase}}</span>
+                    <b>Type: </b><span>{{selectedlocation.dataset.replace("_", " and ") | titlecase}}</span>
                 </p>
                 <p>
                 </p>
                 <p>
-                    <b>Contact</b><span>{{selectedlocation.contact.primaryContactNo}}</span>
+                    <b>Contact: </b><span>{{selectedlocation.contact.primaryContactNo}}</span>
                 </p>
             </mat-card-content>
         </mat-card>
     </div>
     <div class="parent">
             <div class="child" >
-                <mat-card style="height: 30vh; ">
-                        <b>Address:</b><span>{{selectedlocation.address.block}} {{selectedlocation.address.streetName}}, #{{selectedlocation.address.floorNumber}}-{{selectedlocation.address.unitNumber}}, {{selectedlocation.address.postalCode}}</span>
-                        <b>Nearest:</b><span>{{selectedlocation.nearestMrtStation}}</span>
-                        <span>GeoCode:</span><span>{{selectedlocation.location.longitude}},{{selectedlocation.location.latitude}}</span>
+                <mat-card style="width: 30vw; height: 20vw;">
+                    <div style="padding-top: 3vw;padding-bottom: 3vw;">
+                        <b>Address: </b><span>{{selectedlocation.address.block}} {{selectedlocation.address.streetName}}, #{{selectedlocation.address.floorNumber}}-{{selectedlocation.address.unitNumber}}, {{selectedlocation.address.postalCode}}</span><br>
+                        <b>Nearest MRT: </b><span>{{selectedlocation.nearestMrtStation}}</span>
+                    </div>
                 </mat-card>
             </div>
             <div class="child">
@@ -70,9 +69,6 @@
                     </iframe>
             </div>
     </div>
-    
-    <mat-card>
-    </mat-card>
 </div>
 
 
@@ -80,7 +76,7 @@
 
 
 <div *ngIf="selectedlocation?.fav" style="display: flex; justify-content: center;">
-    <button mat-raised-button color="primary" type="button" (click)="removeFav()">Remove from Favourites</button>
+    <button mat-raised-button color="primary" type="button" (click)="removeFav()">Remove from Favourites</button> <span>&nbsp;&nbsp;&nbsp;</span>
     <button mat-raised-button color="primary" type="button" (click)="toggleForm()">Add Comment</button>
 </div>
 <div [hidden]="hideForm>0" >
@@ -106,7 +102,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <span>Upload Pic: </span>
+                        <b>Upload Pic: </b>
                         <input type="file" accept="image/*" formControlName="picture" #picture>
                     </td>
                 </tr>
@@ -123,16 +119,24 @@
     <button mat-raised-button color="primary" type="button" [hidden]="selectedlocation.fav" (click)="addFav()">Save to Favourites</button>
 </div>
 
+<br>
 
-
-<div *ngIf="selectedlocation.locationComments" style="margin: auto;width: 50%;padding-left: 25vw;">
+<div *ngIf="selectedlocation.locationComments" style="margin: auto;width: 50%;padding-left: 10vw;">
     <div *ngFor="let comment of selectedlocation.locationComments; let idx = index">
-        <h3>User: <span>{{selectedlocation.locationComments[idx].email}}</span></h3>
-        <b>Comment: </b> <span>{{selectedlocation.locationComments[idx].comment}}</span><br>
-        <b>Rating: </b> <span>{{selectedlocation.locationComments[idx].rating}}</span><br>
-        <img src="https://vttpws.sgp1.digitaloceanspaces.com/todo%2F{{selectedlocation.locationComments[idx].imageUUID}}" alt="" width="100vw">
-        <div [hidden]="!emailCheck(idx)">
-            <button mat-raised-button color="primary" (click)="deleteComment(selectedlocation.locationComments[idx].post_id)">Delete Comment</button>
-        </div>
+        <mat-card style="width: 30vw; ">
+            <div style="padding-left: 2vw; padding-top: 2vh; padding-bottom: 2vh;">
+                <span style="padding: 0vw;"><b>User:</b> {{selectedlocation.locationComments[idx].email}}</span>
+                <p>
+                    <img src="https://vttpws.sgp1.digitaloceanspaces.com/todo%2F{{selectedlocation.locationComments[idx].imageUUID}}" alt="" width="100vw">
+                </p>
+                <b>Comment: </b> <span>{{selectedlocation.locationComments[idx].comment}}</span><br>
+                <b>Rating: </b> <span>{{selectedlocation.locationComments[idx].rating}}</span><br>
+                <br>
+                <div [hidden]="!emailCheck(idx)">
+                    <button mat-raised-button color="primary" (click)="deleteComment(selectedlocation.locationComments[idx].post_id)">Delete Comment</button>
+                </div>
+            </div>
+        </mat-card>
+        <br>
     </div>
 </div>

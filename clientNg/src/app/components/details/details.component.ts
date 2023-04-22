@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'rxjs';
 import { TIHLocation } from 'src/app/models';
 import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
@@ -84,6 +85,7 @@ export class DetailsComponent implements OnInit {
     console.log("UPLOADED")
     alert("COMMENTED")
     this.commentForm = this.createForm();
+    delay(10000);
     this.svc.getComments(this.selectedlocation.uuid).then(v=> {this.selectedlocation.locationComments= v});
   }
 
